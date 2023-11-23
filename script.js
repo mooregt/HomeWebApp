@@ -50,18 +50,38 @@ function removeItem(item) {
     .catch(error => console.error('Error:', error));
 }
 
-function loadItems() {
+async function loadItems() {
   var itemList = document.getElementById("itemList");
 
-  // Fetch items from the server
-  fetch('/getItems')
-    .then(response => response.json())
-    .then(items => {
-      // Display items as list items
-      items.forEach(item => {
+  var cacheItems = loadFromCache();
+
+  if (cacheItems)
+  {
+    cacheItems.forEach(item => {
+      var listItem = document.createElement("li");
+      listItem.textContent = item.name; // Assuming 'name' is a property of your items
+
+      var removeButton = document.createElement("button");
+      removeButton.textContent = "Remove";
+      removeButton.disabled = true;
+
+      listItem.appendChild(removeButton);
+      itemList.appendChild(listItem);
+    });
+  }
+
+  try {
+    // Load items from the database
+    var dbItems = await loadFromDatabase();
+
+    // If database items are available, replace the list with them
+    if (dbItems) {
+      itemList.innerHTML = "";
+      
+      dbItems.forEach(item => {
         var listItem = document.createElement("li");
         listItem.textContent = item.name; // Assuming 'name' is a property of your items
-
+  
         var removeButton = document.createElement("button");
         removeButton.textContent = "Remove";
         removeButton.onclick = function () {
@@ -69,12 +89,48 @@ function loadItems() {
           // Remove the item from the list
           itemList.removeChild(listItem);
         };
-
+  
         listItem.appendChild(removeButton);
         itemList.appendChild(listItem);
       });
-    })
-    .catch(error => console.error('Error:', error));
+      localStorage.setItem('checklistItems', JSON.stringify(items));
+    }
+  } catch (error) {
+      console.error('Error loading items from the database:', error);
+      // Handle errors as needed
+  }
+}
+
+function loadFromCache() {
+  const storedItems = localStorage.getItem('checklistItems');
+
+  if (storedItems) {
+    // If available, parse the stored JSON
+    items = JSON.parse(storedItems);
+    return items;
+  }
+}
+
+async function loadFromDatabase() {
+  try {
+        // Fetch items from the server
+        const response = await fetch('/getItems');
+        
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+
+        const items = await response.json();
+        
+        // Process the items or any other logic here if needed
+        
+        // Return the items from the function
+        return items;
+    } catch (error) {
+        console.error('Error:', error);
+        // You might want to throw the error or handle it in a different way depending on your requirements
+        throw error;
+    }
 }
 
 function saveItem(item) {

@@ -58,3 +58,9 @@ button.remove-button {
 button.remove-button:hover {
   background-color: #c0392b;
 }
+
+button:disabled {
+  background-color: #dcdcdc; /* Light grey background */
+  color: #a0a0a0; /* Grey text color */
+  cursor: not-allowed; /* Change cursor to indicate the button is disabled */
+}
