@@ -3,19 +3,16 @@ const bodyParser = require('body-parser');
 const { MongoClient } = require('mongodb');
 
 const app = express();
-const port = process.env.PORT || 3000; // Use the provided port or default to 3000
+const port = process.env.PORT || 3000;
 
 app.use(express.static(__dirname));
 app.use(bodyParser.json());
 
-// Connection URI
 const uri = 'mongodb+srv://mooretgeorge:3oHsSAXAoX6jvoMk@cluster0.sv6wfeu.mongodb.net/?retryWrites=true&w=majority';
 
-// Database and collection names
 const dbName = 'shopping';
 const collectionName = 'items';
 
-// Function to connect to MongoDB
 async function connectToMongo() {
   const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
   await client.connect();
