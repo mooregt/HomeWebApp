@@ -8,24 +8,34 @@ const port = process.env.PORT || 3000;
 app.use(express.static(__dirname));
 app.use(bodyParser.json());
 
-const uri = 'mongodb+srv://mooretgeorge:3oHsSAXAoX6jvoMk@cluster0.sv6wfeu.mongodb.net/?retryWrites=true&w=majority';
-
-const dbName = 'shopping';
-const collectionName = 'items';
-
-async function connectToMongo() {
-  const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
+/**
+ * Creates a connection to a MongoDB collection
+ * @param {string} dbName 
+ * @param {string} collectionName 
+ * @returns 
+ */
+async function connectToMongo(dbName, collectionName) {
+  const uri = 'mongodb+srv://mooretgeorge:3oHsSAXAoX6jvoMk@cluster0.sv6wfeu.mongodb.net/?retryWrites=true&w=majority';
+  const client = new MongoClient(uri);
+  
   await client.connect();
   return client.db(dbName).collection(collectionName);
 }
 
+/**
+ * / endpoint.
+ * Retrieves the index page.
+ */
 app.get('/', (req, res) => {
   res.sendFile(__dirname + '/index.html');
 });
 
-app.get('/getItems', async (req, res) => {
+app.get('/getShoppingListItems', async (req, res) => {
+  const dbName = 'shopping';
+  const collectionName = 'items';
+
   try {
-    const collection = await connectToMongo();
+    const collection = await connectToMongo(dbName, collectionName);
     const items = await collection.find({}).toArray();
     res.json(items);
   } catch (error) {
@@ -34,10 +44,17 @@ app.get('/getItems', async (req, res) => {
   }
 });
 
-app.post('/saveItem', async (req, res) => {
+/**
+ * /saveShoppingListItem endpoint.
+ * Writes the item to the MongoDB collection called items.
+ */
+app.post('/saveShoppingListItem', async (req, res) => {
   const { item } = req.body;
+  const dbName = 'shopping';
+  const collectionName = 'items';
+
   try {
-    const collection = await connectToMongo();
+    const collection = await connectToMongo(dbName, collectionName);
     await collection.insertOne({ name: item });
     res.json({ success: true });
   } catch (error) {
@@ -46,10 +63,17 @@ app.post('/saveItem', async (req, res) => {
   }
 });
 
-app.post('/removeItem', async (req, res) => {
+/**
+ * /removeShoppingListItem endpoint.
+ * Removes the item from the MongoDB collection called items.
+ */
+app.post('/removeShoppingListItem', async (req, res) => {
   const { item } = req.body;
+  const dbName = 'shopping';
+  const collectionName = 'items';
+
   try {
-    const collection = await connectToMongo();
+    const collection = await connectToMongo(dbName, collectionName);
     await collection.deleteOne({ name: item });
     res.json({ success: true });
   } catch (error) {
@@ -58,6 +82,9 @@ app.post('/removeItem', async (req, res) => {
   }
 });
 
+/**
+ * Start up the server on the specified port.
+ */
 app.listen(port, '0.0.0.0', () => {
     console.log(`Server is running at http://${require('os').hostname()}:${port}`);
 });

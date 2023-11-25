@@ -2,6 +2,9 @@ document.addEventListener('DOMContentLoaded', function () {
   loadItems();
 });
 
+/**
+ * Adds an item to the shopping list from the value entered in the itemInput element.
+ */
 function addItem() {
   console.log("addItem triggered.");
   var itemInput = document.getElementById("itemInput");
@@ -20,7 +23,7 @@ function addItem() {
 
     itemInput.value = "";
 
-    saveItem(listItem.textContent);
+    PostItemToServer('/saveShoppingListItem', listItem.textContent);
 
     listItem.appendChild(removeButton);
 
@@ -28,24 +31,13 @@ function addItem() {
   }
 }
 
-function removeItem(item) {
-  fetch('/removeItem', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({ item }),
-  })
-    .then(response => response.json())
-    .then(data => console.log('Success:', data))
-    .catch(error => console.error('Error:', error));
-}
-
+/**
+ * Loads the items currently in the shopping list.
+ */
 async function loadItems() {
   var itemList = document.getElementById("itemList");
 
-  var cacheItems = loadFromCache();
-
+  var cacheItems = GetItemsFromCache('checklistItems');
   if (cacheItems)
   {
     cacheItems.forEach(item => {
@@ -62,8 +54,7 @@ async function loadItems() {
   }
 
   try {
-    var dbItems = await loadFromDatabase();
-
+    var dbItems = await GetItemsFromServer('/getShoppingListItems');
     if (dbItems) {
       itemList.innerHTML = "";
       
@@ -74,55 +65,18 @@ async function loadItems() {
         var removeButton = document.createElement("button");
         removeButton.textContent = "Remove";
         removeButton.onclick = function () {
-          removeItem(item.name);
+          PostItemToServer('/removeShoppingListItem', item.name);
           itemList.removeChild(listItem);
         };
   
         listItem.appendChild(removeButton);
         itemList.appendChild(listItem);
       });
-      localStorage.setItem('checklistItems', JSON.stringify(dbItems));
+      
+      SaveItemsToCache('checklistItems', dbItems);
     }
   } catch (error) {
     console.error('Error loading items from the database:', error);
   }
 }
 
-function loadFromCache() {
-  const storedItems = localStorage.getItem('checklistItems');
-
-  if (storedItems) {
-    items = JSON.parse(storedItems);
-    return items;
-  }
-}
-
-async function loadFromDatabase() {
-  try {
-    const response = await fetch('/getItems');
-    
-    if (!response.ok) {
-      throw new Error(`HTTP error! Status: ${response.status}`);
-    }
-
-    const items = await response.json();
-    
-    return items;
-  } catch (error) {
-    console.error('Error:', error);
-    throw error;
-  }
-}
-
-function saveItem(item) {
-  fetch('/saveItem', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({ item }),
-  })
-    .then(response => response.json())
-    .then(data => console.log('Success:', data))
-    .catch(error => console.error('Error:', error));
-}
