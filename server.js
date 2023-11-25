@@ -5,6 +5,8 @@ const { MongoClient } = require('mongodb');
 const app = express();
 const port = process.env.PORT || 3000;
 
+var shoppingListCollection;
+
 app.use(express.static(__dirname));
 app.use(bodyParser.json());
 
@@ -31,12 +33,8 @@ app.get('/', (req, res) => {
 });
 
 app.get('/getShoppingListItems', async (req, res) => {
-  const dbName = 'shopping';
-  const collectionName = 'items';
-
   try {
-    const collection = await connectToMongo(dbName, collectionName);
-    const items = await collection.find({}).toArray();
+    const items = await shoppingListCollection.find({}).toArray();
     res.json(items);
   } catch (error) {
     console.error('Error reading items from MongoDB:', error);
@@ -50,12 +48,9 @@ app.get('/getShoppingListItems', async (req, res) => {
  */
 app.post('/saveShoppingListItem', async (req, res) => {
   const { item } = req.body;
-  const dbName = 'shopping';
-  const collectionName = 'items';
 
   try {
-    const collection = await connectToMongo(dbName, collectionName);
-    await collection.insertOne({ name: item });
+    await shoppingListCollection.insertOne({ name: item });
     res.json({ success: true });
   } catch (error) {
     console.error('Error writing item to MongoDB:', error);
@@ -69,12 +64,9 @@ app.post('/saveShoppingListItem', async (req, res) => {
  */
 app.post('/removeShoppingListItem', async (req, res) => {
   const { item } = req.body;
-  const dbName = 'shopping';
-  const collectionName = 'items';
 
   try {
-    const collection = await connectToMongo(dbName, collectionName);
-    await collection.deleteOne({ name: item });
+    await shoppingListCollection.deleteOne({ name: item });
     res.json({ success: true });
   } catch (error) {
     console.error('Error writing item to MongoDB:', error);
@@ -85,7 +77,8 @@ app.post('/removeShoppingListItem', async (req, res) => {
 /**
  * Start up the server on the specified port.
  */
-app.listen(port, '0.0.0.0', () => {
+app.listen(port, '0.0.0.0', async () => {
+    shoppingListCollection = await connectToMongo('shopping', 'items');
     console.log(`Server is running at http://${require('os').hostname()}:${port}`);
 });
 
