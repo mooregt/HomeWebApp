@@ -17,8 +17,11 @@ function addItem() {
 
     var removeButton = document.createElement("button");
     removeButton.textContent = "Remove";
-    removeButton.onclick = function () {
-      removeItem(listItem);
+    removeButton.onclick = async function () {
+      PostItemToServer('/removeShoppingListItem', listItem);
+      itemList.removeChild(listItem);
+      dbItems = await GetItemsFromServer('/getShoppingListItems')
+      SaveItemsToCache('checklistItems', dbItems);
     };
     AddItemToCache('checklistItems', itemInput.value);
 
@@ -67,9 +70,11 @@ async function loadItems() {
   
         var removeButton = document.createElement("button");
         removeButton.textContent = "Remove";
-        removeButton.onclick = function () {
+        removeButton.onclick = async function () {
           PostItemToServer('/removeShoppingListItem', item.name);
           itemList.removeChild(listItem);
+          dbItems = await GetItemsFromServer('/getShoppingListItems')
+          SaveItemsToCache('checklistItems', dbItems);
         };
   
         listItem.appendChild(removeButton);
