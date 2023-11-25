@@ -17,6 +17,11 @@ input[type="text"] {
   font-size: 16px;
 }
 
+select {
+  padding: 8px;
+  font-size: 16px;
+}
+
 button {
   padding: 8px 12px;
   font-size: 16px;
@@ -63,4 +68,26 @@ button:disabled {
   background-color: #dcdcdc; /* Light grey background */
   color: #a0a0a0; /* Grey text color */
   cursor: not-allowed; /* Change cursor to indicate the button is disabled */
+}
+
+#navbar {
+  background-color: #aaa;
+  overflow: hidden;
+  border-radius: 25px;
+}
+
+#navbar a {
+  float: left;
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-weight: bold;
+  border-radius: 25px;
+}
+
+#navbar a:hover {
+  background-color: #e3e3e3;
+  color: black;
 }
