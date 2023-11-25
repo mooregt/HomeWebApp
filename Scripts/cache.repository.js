@@ -19,3 +19,14 @@ function GetItemsFromCache(itemsName) {
 function SaveItemsToCache(itemsName, items) {
   localStorage.setItem(itemsName, JSON.stringify(items));
 }
+
+/**
+ * Adds a single item to the cache.
+ * @param {string} itemsName
+ * @param {string} item
+ */
+function AddItemToCache(itemsName, item) {
+  var items = GetItemsFromCache(itemsName)
+  items.push({_id: "", name: item});
+  localStorage.setItem(itemsName, JSON.stringify(items));
+}

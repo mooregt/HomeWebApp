@@ -20,10 +20,13 @@ function addItem() {
     removeButton.onclick = function () {
       removeItem(listItem);
     };
+    AddItemToCache('checklistItems', itemInput.value);
 
     itemInput.value = "";
 
+    
     PostItemToServer('/saveShoppingListItem', listItem.textContent);
+    
 
     listItem.appendChild(removeButton);
 
@@ -79,4 +82,3 @@ async function loadItems() {
     console.error('Error loading items from the database:', error);
   }
 }
-

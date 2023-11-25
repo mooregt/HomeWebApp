@@ -9,10 +9,10 @@ app.use(express.static(__dirname));
 app.use(bodyParser.json());
 
 /**
- * Creates a connection to a MongoDB collection
+ * Creates a connection to a MongoDB collection.
  * @param {string} dbName 
  * @param {string} collectionName 
- * @returns 
+ * @returns {Collection<Document>} The MongoDB collection.
  */
 async function connectToMongo(dbName, collectionName) {
   const uri = 'mongodb+srv://mooretgeorge:3oHsSAXAoX6jvoMk@cluster0.sv6wfeu.mongodb.net/?retryWrites=true&w=majority';
