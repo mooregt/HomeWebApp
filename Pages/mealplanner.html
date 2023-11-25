@@ -6,6 +6,8 @@
     <title>Meal Planner</title>
     <link rel="stylesheet" href="../Styles/index.css">
     <script src="../Scripts/mealplan.service.js"></script>
+    <script src="../Scripts/server.repository.js"></script>
+    <script src="../Scripts/cache.repository.js"></script>
 </head>
 <body>
 
@@ -28,9 +30,9 @@
         </select>
 
         <label for="meal">Meal:</label>
-        <input type="text" id="meal" name="meal" placeholder="Enter your meal">
+        <input type="text" id="mealInput" name="meal" placeholder="Enter your meal">
 
-        <button type="button" onclick="addMeal()">Add Meal</button>
+        <button type="button" onclick="addItem()">Add Meal</button>
     </form>
 
     <ul id="mealPlan">
