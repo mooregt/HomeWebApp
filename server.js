@@ -70,10 +70,10 @@ app.post('/saveShoppingListItem', async (req, res) => {
 });
 
 app.post('/saveMealItem', async (req, res) => {
-  const { item } = req.body;
+  const { item, day } = req.body;
 
   try {
-    await mealPlanCollection.insertOne({ name: item });
+    await mealPlanCollection.insertOne({ name: item, weekday: day});
     res.json({ success: true });
   } catch (error) {
     console.error('Error writing item to MongoDB:', error);
@@ -99,9 +99,10 @@ app.post('/removeShoppingListItem', async (req, res) => {
 
 app.post('/removeMealItem', async (req, res) => {
   const { item } = req.body;
+  console.log(item);
 
   try {
-    await mealPlanCollection.deleteOne({ name: item });
+    await mealPlanCollection.deleteOne({ weekday: item });
     res.json({ success: true });
   } catch (error) {
     console.error('Error writing item to MongoDB:', error);

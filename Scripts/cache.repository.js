@@ -30,3 +30,9 @@ function AddItemToCache(itemsName, item) {
   items.push({_id: "", name: item});
   localStorage.setItem(itemsName, JSON.stringify(items));
 }
+
+function AddMealToCache(itemsName, item, day) {
+  var items = GetItemsFromCache(itemsName)
+  items.push({_id: "", name: item, weekday: day});
+  localStorage.setItem(itemsName, JSON.stringify(items));
+}

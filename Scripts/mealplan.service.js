@@ -5,75 +5,85 @@ document.addEventListener('DOMContentLoaded', function () {
 function addItem() {
   console.log("addItem triggered.");
   var mealInput = document.getElementById("mealInput");
-  var mealPlan = document.getElementById("mealPlan");
   const day = document.getElementById('day').value;
 
   if (mealInput.value.trim() !== "") {
-    var listItem = document.createElement("li");
+    AddMealToCache('mealItems', mealInput.value, (day.charAt(0).toUpperCase() + day.slice(1)));
 
-    listItem.textContent = `${day.charAt(0).toUpperCase() + day.slice(1)}: ${mealInput.value}`;
+    PostItemToServer('/removeMealItem', (day.charAt(0).toUpperCase() + day.slice(1)));
+    PostMealToServer('/saveMealItem', mealInput.value, (day.charAt(0).toUpperCase() + day.slice(1)));
 
-    var removeButton = document.createElement("button");
-    removeButton.textContent = "Remove";
-    removeButton.onclick = async function () {
-      PostItemToServer('/removeMealItem', listItem);
-      mealPlan.removeChild(listItem);
-      dbItems = await GetItemsFromServer('/getMealItems')
-      SaveItemsToCache('mealItems', dbItems);
-    };
-    AddItemToCache('mealItems', mealInput.value);
-
+    loadItems();
     mealInput.value = "";
-
-    
-    PostItemToServer('/saveMealItem', listItem.textContent);
-    
-
-    listItem.appendChild(removeButton);
-
-    mealPlan.appendChild(listItem);
   }
 }
 
 async function loadItems() {
-  var mealPlan = document.getElementById("mealPlan");
+  var mondayMeal = document.getElementById("mondayMeal");
+  var tuesdayMeal = document.getElementById("tuesdayMeal");
+  var wednesdayMeal = document.getElementById("wednesdayMeal");
+  var thursdayMeal = document.getElementById("thursdayMeal");
+  var fridayMeal = document.getElementById("fridayMeal");
+  var saturdayMeal = document.getElementById("saturdayMeal");
+  var sundayMeal = document.getElementById("sundayMeal");
 
   var cacheItems = GetItemsFromCache('mealItems');
   if (cacheItems)
   {
     cacheItems.forEach(item => {
-      var listItem = document.createElement("li");
-      listItem.textContent = item.name;
-
-      var removeButton = document.createElement("button");
-      removeButton.textContent = "Remove";
-      removeButton.disabled = true;
-
-      listItem.appendChild(removeButton);
-      mealPlan.appendChild(listItem);
+      switch (item.weekday) {
+        case "Monday":
+          mondayMeal.innerHTML = item.name;
+          break;
+        case "Tuesday":
+          tuesdayMeal.innerHTML = item.name;
+          break;
+        case "Wednesday":
+          wednesdayMeal.innerHTML = item.name;
+          break;
+        case "Thursday":
+          thursdayMeal.innerHTML = item.name;
+          break;
+        case "Friday":
+          fridayMeal.innerHTML = item.name;
+          break;
+        case "Saturday":
+          saturdayMeal.innerHTML = item.name;
+          break;
+        case "Sunday":
+          sundayMeal.innerHTML = item.name;
+          break;
+      }
     });
   }
 
   try {
     var dbItems = await GetItemsFromServer('/getMealItems');
     if (dbItems) {
-      mealPlan.innerHTML = "";
-      
       dbItems.forEach(item => {
-        var listItem = document.createElement("li");
-        listItem.textContent = item.name;
-  
-        var removeButton = document.createElement("button");
-        removeButton.textContent = "Remove";
-        removeButton.onclick = async function () {
-          PostItemToServer('/removeMealItem', item.name);
-          mealPlan.removeChild(listItem);
-          dbItems = await GetItemsFromServer('/getMealItems')
-          SaveItemsToCache('mealItems', dbItems);
-        };
-  
-        listItem.appendChild(removeButton);
-        mealPlan.appendChild(listItem);
+        switch (item.weekday) {
+          case "Monday":
+            mondayMeal.innerHTML = item.name;
+            break;
+          case "Tuesday":
+            tuesdayMeal.innerHTML = item.name;
+            break;
+          case "Wednesday":
+            wednesdayMeal.innerHTML = item.name;
+            break;
+          case "Thursday":
+            thursdayMeal.innerHTML = item.name;
+            break;
+          case "Friday":
+            fridayMeal.innerHTML = item.name;
+            break;
+          case "Saturday":
+            saturdayMeal.innerHTML = item.name;
+            break;
+          case "Sunday":
+            sundayMeal.innerHTML = item.name;
+            break;
+        }
       });
       
       SaveItemsToCache('mealItems', dbItems);
