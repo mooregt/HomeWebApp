@@ -3,9 +3,9 @@
  * @param {string} itemsEndpoint 
  * @returns {JSON} The items retrieved from the server.
  */
-async function GetItemsFromServer(itemsEndpoint) {
+async function GetItemsFromServer(type) {
   try {
-    const response = await fetch(itemsEndpoint);
+    const response = await fetch('/getItems?type=' + type);
     
     if (!response.ok) {
       throw new Error(`HTTP error! Status: ${response.status}`);

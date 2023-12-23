@@ -58,7 +58,7 @@ async function loadItems() {
   }
 
   try {
-    var dbItems = await GetItemsFromServer('/getMealItems');
+    var dbItems = await GetItemsFromServer('mealPlan');
     if (dbItems) {
       dbItems.forEach(item => {
         switch (item.weekday) {

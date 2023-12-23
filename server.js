@@ -33,31 +33,30 @@ app.get('/', (req, res) => {
   res.sendFile(__dirname + '/index.html');
 });
 
-app.get('/getShoppingListItems', async (req, res) => {
+/**
+ * Retrieves the items from the specified MongoDB collections.
+ * @param {string} type the name of the collection (one of shoppingList, mealPlan, chores)
+ */
+app.get('/getItems', async (req, res) => {
   try {
-    const items = await shoppingListCollection.find({}).toArray();
-    res.json(items);
-  } catch (error) {
-    console.error('Error reading items from MongoDB:', error);
-    res.status(500).send('Internal Server Error');
-  }
-});
+    const type = req.query.type;
+    var items;
 
-app.get('/getMealItems', async (req, res) => {
-  try {
-    const items = await mealPlanCollection.find({}).toArray();
+    switch (type) {
+      case "shoppingList":
+        items = await shoppingListCollection.find({}).toArray();
+        break;
+      case "mealPlan":
+        items = await mealPlanCollection.find({}).toArray();
+        break;
+      case "chores":
+        items = await choresCollection.find({}).toArray();
+        break;
+    }
+    
     res.json(items);
-  } catch (error) {
-    console.error('Error reading items from MongoDB:', error);
-    res.status(500).send('Internal Server Error');
   }
-});
-
-app.get('/getChoresItems', async (req, res) => {
-  try {
-    const items = await choresCollection.find({}).toArray();
-    res.json(items);
-  } catch (error) {
+  catch (error) {
     console.error('Error reading items from MongoDB:', error);
     res.status(500).send('Internal Server Error');
   }

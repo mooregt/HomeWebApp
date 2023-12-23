@@ -20,7 +20,7 @@ function addItem() {
     removeButton.onclick = async function () {
       PostItemToServer('/removeChoresItem', listItem);
       itemList.removeChild(listItem);
-      dbItems = await GetItemsFromServer('/getChoresItems')
+      dbItems = await GetItemsFromServer('chores')
       SaveItemsToCache('choreItems', dbItems);
     };
     AddItemToCache('choreItems', itemInput.value);
@@ -60,7 +60,7 @@ async function loadItems() {
   }
 
   try {
-    var dbItems = await GetItemsFromServer('/getChoresItems');
+    var dbItems = await GetItemsFromServer('chores');
     if (dbItems) {
       itemList.innerHTML = "";
       
@@ -73,7 +73,7 @@ async function loadItems() {
         removeButton.onclick = async function () {
           PostItemToServer('/removeChoresItem', item.name);
           itemList.removeChild(listItem);
-          dbItems = await GetItemsFromServer('/getChoresItems')
+          dbItems = await GetItemsFromServer('chores')
           SaveItemsToCache('choreItems', dbItems);
         };
   
