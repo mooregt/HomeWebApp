@@ -74,10 +74,10 @@ app.post('/saveItem', async (req, res) => {
         await shoppingListCollection.insertOne({ name: item });
         break;
       case "mealPlan":
-        await mealPlanCollection.insertOne({ name: item, weekday: item2});
+        await mealPlanCollection.insertOne({ name: item, weekday: item2 });
         break;
       case "chores":
-        await choresCollection.insertOne({ name: item });
+        await choresCollection.insertOne({ name: item, person: item2 });
         break;
     }
 

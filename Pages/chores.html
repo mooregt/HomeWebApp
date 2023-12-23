@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home Hub</title>
     <link rel="stylesheet" href="../Styles/index.css">
+    <link rel="stylesheet" href="../Styles/chores.css">
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -24,10 +25,18 @@
 </div>
 <h2>Chores</h2>
 
-<div>
-    <input type="text" id="itemInput" placeholder="Enter item">
-    <button onclick="addItem()">Add Item</button>
-</div>
+<form>
+    <label for="person">Assigned to:</label>
+    <select id="person" name="person">
+        <option value="Laura">Laura</option>
+        <option value="George">George</option>
+    </select>
+
+    <label for="meal">Chore:</label>
+    <input type="text" id="choreInput" name="chore" placeholder="Enter item">
+
+    <button type="button" onclick="addItem()">Add Item</button>
+</form>
 
 <ul id="itemList">
 </ul>

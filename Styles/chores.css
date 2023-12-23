@@ -1,0 +1,24 @@
+/* Button styles */
+#Laura {
+  padding: 8px 12px;
+  font-size: 16px;
+  cursor: pointer;
+  background-color: #fd9dff;
+  color: #fff;
+  border: none;
+  border-radius: 3px;
+  margin-left: auto;
+  margin-right: 5px;
+}
+
+#George {
+  padding: 8px 12px;
+  font-size: 16px;
+  cursor: pointer;
+  background-color: #ff995e;
+  color: #fff;
+  border: none;
+  border-radius: 3px;
+  margin-left: auto;
+  margin-right: 5px;
+}

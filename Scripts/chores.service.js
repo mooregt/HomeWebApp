@@ -6,14 +6,21 @@ document.addEventListener('DOMContentLoaded', function () {
  * Adds an item to the chores from the value entered in the itemInput element.
  */
 function addItem() {
+  var itemInput = document.getElementById("choreInput");
+  const person = document.getElementById('person').value;
+
   console.log("addItem triggered.");
-  var itemInput = document.getElementById("itemInput");
   var itemList = document.getElementById("itemList");
 
   if (itemInput.value.trim() !== "") {
     var listItem = document.createElement("li");
 
     listItem.textContent = itemInput.value;
+
+    var assignee = document.createElement("button");
+    assignee.textContent = person;
+    assignee.disabled = true;
+    assignee.id = person;
 
     var removeButton = document.createElement("button");
     removeButton.textContent = "Remove";
@@ -27,8 +34,9 @@ function addItem() {
 
     itemInput.value = "";
 
-    PostItemToServer('/saveItem', 'chores', listItem.textContent);
+    PostItemToServer('/saveItem', 'chores', listItem.textContent, person);
     
+    listItem.appendChild(assignee);
     listItem.appendChild(removeButton);
 
     itemList.appendChild(listItem);
@@ -48,10 +56,16 @@ async function loadItems() {
       var listItem = document.createElement("li");
       listItem.textContent = item.name;
 
+      var assignee = document.createElement("button");
+      assignee.textContent = item.person;
+      assignee.disabled = true;
+      assignee.id = item.person;
+
       var removeButton = document.createElement("button");
       removeButton.textContent = "Remove";
       removeButton.disabled = true;
 
+      listItem.appendChild(assignee);
       listItem.appendChild(removeButton);
       itemList.appendChild(listItem);
     });
@@ -66,6 +80,11 @@ async function loadItems() {
         var listItem = document.createElement("li");
         listItem.textContent = item.name;
   
+        var assignee = document.createElement("button");
+        assignee.textContent = item.person;
+        assignee.disabled = true;
+        assignee.id = item.person;
+
         var removeButton = document.createElement("button");
         removeButton.textContent = "Remove";
         removeButton.onclick = async function () {
@@ -75,6 +94,7 @@ async function loadItems() {
           SaveItemsToCache('choreItems', dbItems);
         };
   
+        listItem.appendChild(assignee);
         listItem.appendChild(removeButton);
         itemList.appendChild(listItem);
       });
