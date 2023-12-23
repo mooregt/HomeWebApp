@@ -53,6 +53,16 @@ app.get('/getMealItems', async (req, res) => {
   }
 });
 
+app.get('/getChoresItems', async (req, res) => {
+  try {
+    const items = await choresCollection.find({}).toArray();
+    res.json(items);
+  } catch (error) {
+    console.error('Error reading items from MongoDB:', error);
+    res.status(500).send('Internal Server Error');
+  }
+});
+
 /**
  * /saveShoppingListItem endpoint.
  * Writes the item to the MongoDB collection called items.
@@ -74,6 +84,18 @@ app.post('/saveMealItem', async (req, res) => {
 
   try {
     await mealPlanCollection.insertOne({ name: item, weekday: day});
+    res.json({ success: true });
+  } catch (error) {
+    console.error('Error writing item to MongoDB:', error);
+    res.status(500).send('Internal Server Error');
+  }
+});
+
+app.post('/saveChoresItem', async (req, res) => {
+  const { item, day } = req.body;
+
+  try {
+    await choresCollection.insertOne({ name: item });
     res.json({ success: true });
   } catch (error) {
     console.error('Error writing item to MongoDB:', error);
@@ -110,12 +132,26 @@ app.post('/removeMealItem', async (req, res) => {
   }
 });
 
+app.post('/removeChoresItem', async (req, res) => {
+  const { item } = req.body;
+  console.log(item);
+
+  try {
+    await choresCollection.deleteOne({ name: item });
+    res.json({ success: true });
+  } catch (error) {
+    console.error('Error writing item to MongoDB:', error);
+    res.status(500).send('Internal Server Error');
+  }
+});
+
 /**
  * Start up the server on the specified port.
  */
 app.listen(port, '0.0.0.0', async () => {
     shoppingListCollection = await connectToMongo('shopping', 'items');
     mealPlanCollection = await connectToMongo('mealPlan', 'items');
+    choresCollection = await connectToMongo('chores', 'items');
     console.log(`Server is running at http://${require('os').hostname()}:${port}`);
 });
 
