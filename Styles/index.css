@@ -1,27 +1,33 @@
+/* Reset some default styles */
 body {
   font-family: 'Arial', sans-serif;
   background-color: #f4f4f4;
   margin: 20px;
 }
 
+/* Heading styles */
 h2 {
   color: #333;
 }
 
+/* General div styles */
 div {
   margin-bottom: 10px;
 }
 
+/* Text input styles */
 input[type="text"] {
   padding: 8px;
   font-size: 16px;
 }
 
+/* Select styles */
 select {
   padding: 8px;
   font-size: 16px;
 }
 
+/* Button styles */
 button {
   padding: 8px 12px;
   font-size: 16px;
@@ -29,17 +35,20 @@ button {
   background-color: #4CAF50;
   color: #fff;
   border: none;
+  border-radius: 3px;
 }
 
 button:hover {
   background-color: #45a049;
 }
 
+/* Unordered list styles */
 ul {
   list-style-type: none;
   padding: 0;
 }
 
+/* List item styles */
 li {
   background-color: #fff;
   padding: 10px;
@@ -51,6 +60,7 @@ li {
   align-items: center;
 }
 
+/* Remove button styles */
 button.remove-button {
   background-color: #e74c3c;
   color: #fff;
@@ -64,18 +74,21 @@ button.remove-button:hover {
   background-color: #c0392b;
 }
 
+/* Disabled button styles */
 button:disabled {
-  background-color: #dcdcdc; /* Light grey background */
-  color: #a0a0a0; /* Grey text color */
-  cursor: not-allowed; /* Change cursor to indicate the button is disabled */
+  background-color: #dcdcdc;
+  color: #a0a0a0;
+  cursor: not-allowed;
 }
 
+/* Navbar styles */
 #navbar {
   background-color: #aaa;
   overflow: hidden;
   border-radius: 25px;
 }
 
+/* Navbar link styles */
 #navbar a {
   float: left;
   display: block;
