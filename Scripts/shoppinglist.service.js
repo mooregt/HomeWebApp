@@ -18,7 +18,7 @@ function addItem() {
     var removeButton = document.createElement("button");
     removeButton.textContent = "Remove";
     removeButton.onclick = async function () {
-      PostItemToServer('/removeShoppingListItem', listItem);
+      PostItemToServer('/removeItem', 'shoppingList', listItem);
       itemList.removeChild(listItem);
       dbItems = await GetItemsFromServer('shoppingList')
       SaveItemsToCache('checklistItems', dbItems);
@@ -28,7 +28,7 @@ function addItem() {
     itemInput.value = "";
 
     
-    PostItemToServer('/saveShoppingListItem', listItem.textContent);
+    PostItemToServer('/saveItem', 'shoppingList', listItem.textContent);
     
 
     listItem.appendChild(removeButton);
@@ -71,7 +71,7 @@ async function loadItems() {
         var removeButton = document.createElement("button");
         removeButton.textContent = "Remove";
         removeButton.onclick = async function () {
-          PostItemToServer('/removeShoppingListItem', item.name);
+          PostItemToServer('/removeItem', 'shoppingList', item.name);
           itemList.removeChild(listItem);
           dbItems = await GetItemsFromServer('shoppingList')
           SaveItemsToCache('checklistItems', dbItems);

@@ -25,9 +25,9 @@ async function GetItemsFromServer(type) {
  * @param {string} itemsEndpoint 
  * @param {*} item
  */
-function PostItemToServer(itemsEndpoint, item) {
+function PostItemToServer(itemsEndpoint, type, item) {
   console.log(item);
-  fetch(itemsEndpoint, {
+  fetch(itemsEndpoint + '?type=' + type, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -39,8 +39,8 @@ function PostItemToServer(itemsEndpoint, item) {
     .catch(error => console.error('Error:', error));
 }
 
-function PostMealToServer(itemsEndpoint, item, day) {
-  fetch(itemsEndpoint, {
+function PostMealToServer(itemsEndpoint, type, item, day) {
+  fetch(itemsEndpoint + '?type=' + type, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',

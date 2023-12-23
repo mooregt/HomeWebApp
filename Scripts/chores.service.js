@@ -18,7 +18,7 @@ function addItem() {
     var removeButton = document.createElement("button");
     removeButton.textContent = "Remove";
     removeButton.onclick = async function () {
-      PostItemToServer('/removeChoresItem', listItem);
+      PostItemToServer('/removeItem', 'chores', listItem);
       itemList.removeChild(listItem);
       dbItems = await GetItemsFromServer('chores')
       SaveItemsToCache('choreItems', dbItems);
@@ -28,7 +28,7 @@ function addItem() {
     itemInput.value = "";
 
     
-    PostItemToServer('/saveChoresItem', listItem.textContent);
+    PostItemToServer('/saveItem', 'chores', listItem.textContent);
     
 
     listItem.appendChild(removeButton);
@@ -71,7 +71,7 @@ async function loadItems() {
         var removeButton = document.createElement("button");
         removeButton.textContent = "Remove";
         removeButton.onclick = async function () {
-          PostItemToServer('/removeChoresItem', item.name);
+          PostItemToServer('/removeItem', 'chores', item.name);
           itemList.removeChild(listItem);
           dbItems = await GetItemsFromServer('chores')
           SaveItemsToCache('choreItems', dbItems);

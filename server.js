@@ -31,6 +31,7 @@ app.get('/', (req, res) => {
 });
 
 /**
+ * /getItems endpoint.
  * Retrieves the items from the specified MongoDB collections.
  * @param {string} type the name of the collection (one of shoppingList, mealPlan, chores)
  */
@@ -60,80 +61,55 @@ app.get('/getItems', async (req, res) => {
 });
 
 /**
- * /saveShoppingListItem endpoint.
+ * /saveItem endpoint.
  * Writes the item to the MongoDB collection called items.
  */
-app.post('/saveShoppingListItem', async (req, res) => {
-  const { item } = req.body;
-
-  try {
-    await shoppingListCollection.insertOne({ name: item });
-    res.json({ success: true });
-  } catch (error) {
-    console.error('Error writing item to MongoDB:', error);
-    res.status(500).send('Internal Server Error');
-  }
-});
-
-app.post('/saveMealItem', async (req, res) => {
+app.post('/saveItem', async (req, res) => {
+  const type = req.query.type;
   const { item, day } = req.body;
 
   try {
-    await mealPlanCollection.insertOne({ name: item, weekday: day});
+    switch (type) {
+      case "shoppingList":
+        await shoppingListCollection.insertOne({ name: item });
+        break;
+      case "mealPlan":
+        await mealPlanCollection.insertOne({ name: item, weekday: day});
+        break;
+      case "chores":
+        await choresCollection.insertOne({ name: item });
+        break;
+    }
+
     res.json({ success: true });
-  } catch (error) {
-    console.error('Error writing item to MongoDB:', error);
-    res.status(500).send('Internal Server Error');
   }
-});
-
-app.post('/saveChoresItem', async (req, res) => {
-  const { item, day } = req.body;
-
-  try {
-    await choresCollection.insertOne({ name: item });
-    res.json({ success: true });
-  } catch (error) {
+  catch (error) {
     console.error('Error writing item to MongoDB:', error);
     res.status(500).send('Internal Server Error');
   }
 });
 
 /**
- * /removeShoppingListItem endpoint.
+ * /removeItem endpoint.
  * Removes the item from the MongoDB collection called items.
  */
-app.post('/removeShoppingListItem', async (req, res) => {
+app.post('/removeItem', async (req, res) => {
+  const type = req.query.type;
   const { item } = req.body;
 
   try {
-    await shoppingListCollection.deleteOne({ name: item });
-    res.json({ success: true });
-  } catch (error) {
-    console.error('Error writing item to MongoDB:', error);
-    res.status(500).send('Internal Server Error');
-  }
-});
+    switch (type) {
+      case "shoppingList":
+        await shoppingListCollection.deleteOne({ name: item });
+        break;
+      case "mealPlan":
+        await mealPlanCollection.deleteOne({ weekday: item });
+        break;
+      case "chores":
+        await choresCollection.deleteOne({ name: item });
+        break;
+    }
 
-app.post('/removeMealItem', async (req, res) => {
-  const { item } = req.body;
-  console.log(item);
-
-  try {
-    await mealPlanCollection.deleteOne({ weekday: item });
-    res.json({ success: true });
-  } catch (error) {
-    console.error('Error writing item to MongoDB:', error);
-    res.status(500).send('Internal Server Error');
-  }
-});
-
-app.post('/removeChoresItem', async (req, res) => {
-  const { item } = req.body;
-  console.log(item);
-
-  try {
-    await choresCollection.deleteOne({ name: item });
     res.json({ success: true });
   } catch (error) {
     console.error('Error writing item to MongoDB:', error);
