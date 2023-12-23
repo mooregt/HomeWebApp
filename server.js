@@ -5,9 +5,6 @@ const { MongoClient } = require('mongodb');
 const app = express();
 const port = process.env.PORT || 3000;
 
-var shoppingListCollection;
-var mealPlanCollection;
-
 app.use(express.static(__dirname));
 app.use(bodyParser.json());
 
