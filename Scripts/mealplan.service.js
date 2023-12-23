@@ -11,7 +11,7 @@ function addItem() {
     AddMealToCache('mealItems', mealInput.value, (day.charAt(0).toUpperCase() + day.slice(1)));
 
     PostItemToServer('/removeItem', 'mealPlan', (day.charAt(0).toUpperCase() + day.slice(1)));
-    PostMealToServer('/saveItem', 'mealPlan', mealInput.value, (day.charAt(0).toUpperCase() + day.slice(1)));
+    PostItemToServer('/saveItem', 'mealPlan', mealInput.value, (day.charAt(0).toUpperCase() + day.slice(1)));
 
     loadItems();
     mealInput.value = "";

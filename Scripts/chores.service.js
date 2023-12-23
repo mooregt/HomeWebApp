@@ -27,10 +27,8 @@ function addItem() {
 
     itemInput.value = "";
 
-    
     PostItemToServer('/saveItem', 'chores', listItem.textContent);
     
-
     listItem.appendChild(removeButton);
 
     itemList.appendChild(listItem);

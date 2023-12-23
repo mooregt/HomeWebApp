@@ -39,13 +39,18 @@ function PostItemToServer(itemsEndpoint, type, item) {
     .catch(error => console.error('Error:', error));
 }
 
-function PostMealToServer(itemsEndpoint, type, item, day) {
+/**
+ * Posts two items to the server for addition or removal
+ * @param {string} itemsEndpoint 
+ * @param {*} item
+ */
+function PostItemToServer(itemsEndpoint, type, item, item2) {
   fetch(itemsEndpoint + '?type=' + type, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify({ item, day }),
+    body: JSON.stringify({ item, item2 }),
   })
     .then(response => response.json())
     .then(data => console.log('Success:', data))
