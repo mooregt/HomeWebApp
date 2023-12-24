@@ -40,11 +40,22 @@ function addItem() {
 }
 
 /**
- * Loads the items currently in the chores.
+ * Loads the list of items in the chores collection.
  */
-async function loadItems() {
+async function loadItems()
+{
   var itemList = document.getElementById("itemList");
 
+  loadFromCache(itemList);
+  await loadFromDatabase(itemList);
+}
+
+/**
+ * Loads the items currently stored in the cache.
+ * @param {HTMLElement} itemList 
+ */
+function loadFromCache(itemList)
+{
   var cacheItems = GetItemsFromCache(type);
   if (cacheItems)
   {
@@ -60,7 +71,14 @@ async function loadItems() {
       itemList.appendChild(listItem);
     });
   }
+}
 
+/**
+ * Loads the items currently stored in the database.
+ * @param {HTMLElement} itemList 
+ */
+async function loadFromDatabase(itemList)
+{
   try {
     var dbItems = await GetItemsFromServer(type);
     if (dbItems) {

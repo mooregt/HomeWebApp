@@ -22,6 +22,31 @@ function addItem() {
 }
 
 async function loadItems() {
+
+  var cacheItems = GetItemsFromCache(type);
+  if (cacheItems)
+  {
+    cacheItems.forEach(item => {
+      setMealForWeekday(item.weekday, item.name);
+    });
+  }
+
+  try {
+    var dbItems = await GetItemsFromServer(type);
+    if (dbItems) {
+      dbItems.forEach(item => {
+        setMealForWeekday(item.weekday, item.name);
+      });
+      
+      SaveItemsToCache(type, dbItems);
+    }
+  } catch (error) {
+    console.error('Error loading items from the database:', error);
+  }
+}
+
+function setMealForWeekday(weekday, name)
+{
   var mondayMeal = document.getElementById("mondayMeal");
   var tuesdayMeal = document.getElementById("tuesdayMeal");
   var wednesdayMeal = document.getElementById("wednesdayMeal");
@@ -30,68 +55,27 @@ async function loadItems() {
   var saturdayMeal = document.getElementById("saturdayMeal");
   var sundayMeal = document.getElementById("sundayMeal");
 
-  var cacheItems = GetItemsFromCache(type);
-  if (cacheItems)
-  {
-    cacheItems.forEach(item => {
-      switch (item.weekday) {
-        case "Monday":
-          mondayMeal.innerHTML = item.name;
-          break;
-        case "Tuesday":
-          tuesdayMeal.innerHTML = item.name;
-          break;
-        case "Wednesday":
-          wednesdayMeal.innerHTML = item.name;
-          break;
-        case "Thursday":
-          thursdayMeal.innerHTML = item.name;
-          break;
-        case "Friday":
-          fridayMeal.innerHTML = item.name;
-          break;
-        case "Saturday":
-          saturdayMeal.innerHTML = item.name;
-          break;
-        case "Sunday":
-          sundayMeal.innerHTML = item.name;
-          break;
-      }
-    });
-  }
-
-  try {
-    var dbItems = await GetItemsFromServer(type);
-    if (dbItems) {
-      dbItems.forEach(item => {
-        switch (item.weekday) {
-          case "Monday":
-            mondayMeal.innerHTML = item.name;
-            break;
-          case "Tuesday":
-            tuesdayMeal.innerHTML = item.name;
-            break;
-          case "Wednesday":
-            wednesdayMeal.innerHTML = item.name;
-            break;
-          case "Thursday":
-            thursdayMeal.innerHTML = item.name;
-            break;
-          case "Friday":
-            fridayMeal.innerHTML = item.name;
-            break;
-          case "Saturday":
-            saturdayMeal.innerHTML = item.name;
-            break;
-          case "Sunday":
-            sundayMeal.innerHTML = item.name;
-            break;
-        }
-      });
-      
-      SaveItemsToCache(type, dbItems);
-    }
-  } catch (error) {
-    console.error('Error loading items from the database:', error);
+  switch (weekday) {
+    case "Monday":
+      mondayMeal.innerHTML = name;
+      break;
+    case "Tuesday":
+      tuesdayMeal.innerHTML = name;
+      break;
+    case "Wednesday":
+      wednesdayMeal.innerHTML = name;
+      break;
+    case "Thursday":
+      thursdayMeal.innerHTML = name;
+      break;
+    case "Friday":
+      fridayMeal.innerHTML = name;
+      break;
+    case "Saturday":
+      saturdayMeal.innerHTML = name;
+      break;
+    case "Sunday":
+      sundayMeal.innerHTML = name;
+      break;
   }
 }
