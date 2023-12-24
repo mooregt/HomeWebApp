@@ -1,3 +1,7 @@
+// Initialise global constants
+const type = 'chores';
+
+// On page load
 document.addEventListener('DOMContentLoaded', function () {
   loadItems();
 });
@@ -9,13 +13,10 @@ function addItem() {
   var itemInput = document.getElementById("choreInput");
   const person = document.getElementById('person').value;
 
-  console.log("addItem triggered.");
   var itemList = document.getElementById("itemList");
 
   if (itemInput.value.trim() !== "") {
-    var listItem = document.createElement("li");
-
-    listItem.textContent = itemInput.value;
+    var listItem = createListItem(itemInput.value);
     var itemName = listItem.textContent;
 
     var assignee = document.createElement("button");
@@ -23,23 +24,20 @@ function addItem() {
     assignee.disabled = true;
     assignee.id = person;
 
-    var removeButton = document.createElement("button");
-    removeButton.textContent = "Remove";
-    removeButton.onclick = async function () {
-      PostItemToServer('/removeItem', 'chores', itemName);
+    var removeButton = createRemoveButton(itemName, async function () {
+      PostItemToServer('/removeItem', type, itemName);
       itemList.removeChild(listItem);
-      dbItems = await GetItemsFromServer('chores')
-      SaveItemsToCache('choreItems', dbItems);
-    };
-    AddItemToCache('choreItems', itemInput.value);
+      dbItems = await GetItemsFromServer(type)
+      SaveItemsToCache(type, dbItems);
+    });
 
+    AddItemToCache(type, itemInput.value);
     itemInput.value = "";
 
-    PostItemToServer('/saveItem', 'chores', listItem.textContent, person);
+    PostItemToServer('/saveItem', type, listItem.textContent, person);
     
     listItem.appendChild(assignee);
     listItem.appendChild(removeButton);
-
     itemList.appendChild(listItem);
   }
 }
@@ -50,20 +48,18 @@ function addItem() {
 async function loadItems() {
   var itemList = document.getElementById("itemList");
 
-  var cacheItems = GetItemsFromCache('choreItems');
+  var cacheItems = GetItemsFromCache(type);
   if (cacheItems)
   {
     cacheItems.forEach(item => {
-      var listItem = document.createElement("li");
-      listItem.textContent = item.name;
+      var listItem = createListItem(item.name);
 
       var assignee = document.createElement("button");
       assignee.textContent = item.person;
       assignee.disabled = true;
       assignee.id = item.person;
 
-      var removeButton = document.createElement("button");
-      removeButton.textContent = "Remove";
+      var removeButton = createRemoveButton(item.name, null);
       removeButton.disabled = true;
 
       listItem.appendChild(assignee);
@@ -73,34 +69,31 @@ async function loadItems() {
   }
 
   try {
-    var dbItems = await GetItemsFromServer('chores');
+    var dbItems = await GetItemsFromServer(type);
     if (dbItems) {
       itemList.innerHTML = "";
       
       dbItems.forEach(item => {
-        var listItem = document.createElement("li");
-        listItem.textContent = item.name;
+        var listItem = createListItem(item.name);
   
         var assignee = document.createElement("button");
         assignee.textContent = item.person;
         assignee.disabled = true;
         assignee.id = item.person;
 
-        var removeButton = document.createElement("button");
-        removeButton.textContent = "Remove";
-        removeButton.onclick = async function () {
-          PostItemToServer('/removeItem', 'chores', item.name);
+        var removeButton = createRemoveButton(item.name, async function () {
+          PostItemToServer('/removeItem', type, item.name);
           itemList.removeChild(listItem);
-          dbItems = await GetItemsFromServer('chores')
-          SaveItemsToCache('choreItems', dbItems);
-        };
+          dbItems = await GetItemsFromServer(type)
+          SaveItemsToCache(type, dbItems);
+        });
   
         listItem.appendChild(assignee);
         listItem.appendChild(removeButton);
         itemList.appendChild(listItem);
       });
       
-      SaveItemsToCache('choreItems', dbItems);
+      SaveItemsToCache(type, dbItems);
     }
   } catch (error) {
     console.error('Error loading items from the database:', error);

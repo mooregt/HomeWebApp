@@ -1,17 +1,20 @@
+// Initialise global constants
+const type = 'mealPlan';
+
+// On page load
 document.addEventListener('DOMContentLoaded', function () {
   loadItems();
 });
 
 function addItem() {
-  console.log("addItem triggered.");
   var mealInput = document.getElementById("mealInput");
   const day = document.getElementById('day').value;
 
   if (mealInput.value.trim() !== "") {
-    AddMealToCache('mealItems', mealInput.value, (day.charAt(0).toUpperCase() + day.slice(1)));
+    AddMealToCache(type, mealInput.value, (day.charAt(0).toUpperCase() + day.slice(1)));
 
-    PostItemToServer('/removeItem', 'mealPlan', (day.charAt(0).toUpperCase() + day.slice(1)));
-    PostItemToServer('/saveItem', 'mealPlan', mealInput.value, (day.charAt(0).toUpperCase() + day.slice(1)));
+    PostItemToServer('/removeItem', type, (day.charAt(0).toUpperCase() + day.slice(1)));
+    PostItemToServer('/saveItem', type, mealInput.value, (day.charAt(0).toUpperCase() + day.slice(1)));
 
     loadItems();
     mealInput.value = "";
@@ -27,7 +30,7 @@ async function loadItems() {
   var saturdayMeal = document.getElementById("saturdayMeal");
   var sundayMeal = document.getElementById("sundayMeal");
 
-  var cacheItems = GetItemsFromCache('mealItems');
+  var cacheItems = GetItemsFromCache(type);
   if (cacheItems)
   {
     cacheItems.forEach(item => {
@@ -58,7 +61,7 @@ async function loadItems() {
   }
 
   try {
-    var dbItems = await GetItemsFromServer('mealPlan');
+    var dbItems = await GetItemsFromServer(type);
     if (dbItems) {
       dbItems.forEach(item => {
         switch (item.weekday) {
@@ -86,7 +89,7 @@ async function loadItems() {
         }
       });
       
-      SaveItemsToCache('mealItems', dbItems);
+      SaveItemsToCache(type, dbItems);
     }
   } catch (error) {
     console.error('Error loading items from the database:', error);

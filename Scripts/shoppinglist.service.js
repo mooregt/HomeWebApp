@@ -1,3 +1,7 @@
+// Initialise global constants
+const type = 'shoppingList';
+
+// On page load
 document.addEventListener('DOMContentLoaded', function () {
   loadItems();
 });
@@ -6,34 +10,26 @@ document.addEventListener('DOMContentLoaded', function () {
  * Adds an item to the shopping list from the value entered in the itemInput element.
  */
 function addItem() {
-  console.log("addItem triggered.");
   var itemInput = document.getElementById("itemInput");
   var itemList = document.getElementById("itemList");
 
   if (itemInput.value.trim() !== "") {
-    var listItem = document.createElement("li");
-
-    listItem.textContent = itemInput.value;
+    var listItem = createListItem(itemInput.value)
     var itemName = listItem.textContent;
 
-    var removeButton = document.createElement("button");
-    removeButton.textContent = "Remove";
-    removeButton.onclick = async function () {
-      PostItemToServer('/removeItem', 'shoppingList', itemName);
+    var removeButton = createRemoveButton(itemName, async function () {
+      PostItemToServer('/removeItem', type, itemName);
       itemList.removeChild(listItem);
-      dbItems = await GetItemsFromServer('shoppingList')
-      SaveItemsToCache('checklistItems', dbItems);
-    };
-    AddItemToCache('checklistItems', itemInput.value);
+      dbItems = await GetItemsFromServer(type)
+      SaveItemsToCache(type, dbItems);
+    });
 
+    AddItemToCache(type, itemInput.value);
     itemInput.value = "";
-
     
-    PostItemToServer('/saveItem', 'shoppingList', listItem.textContent);
-    
+    PostItemToServer('/saveItem', type, listItem.textContent);
 
     listItem.appendChild(removeButton);
-
     itemList.appendChild(listItem);
   }
 }
@@ -44,15 +40,13 @@ function addItem() {
 async function loadItems() {
   var itemList = document.getElementById("itemList");
 
-  var cacheItems = GetItemsFromCache('checklistItems');
+  var cacheItems = GetItemsFromCache(type);
   if (cacheItems)
   {
     cacheItems.forEach(item => {
-      var listItem = document.createElement("li");
-      listItem.textContent = item.name;
+      var listItem = createListItem(item.name);
 
-      var removeButton = document.createElement("button");
-      removeButton.textContent = "Remove";
+      var removeButton = createRemoveButton(item.name, null);
       removeButton.disabled = true;
 
       listItem.appendChild(removeButton);
@@ -61,28 +55,25 @@ async function loadItems() {
   }
 
   try {
-    var dbItems = await GetItemsFromServer('shoppingList');
+    var dbItems = await GetItemsFromServer(type);
     if (dbItems) {
       itemList.innerHTML = "";
       
       dbItems.forEach(item => {
-        var listItem = document.createElement("li");
-        listItem.textContent = item.name;
+        var listItem = createListItem(item.name);
   
-        var removeButton = document.createElement("button");
-        removeButton.textContent = "Remove";
-        removeButton.onclick = async function () {
-          PostItemToServer('/removeItem', 'shoppingList', item.name);
+        var removeButton = createRemoveButton(item.name, async function () {
+          PostItemToServer('/removeItem', type, item.name);
           itemList.removeChild(listItem);
-          dbItems = await GetItemsFromServer('shoppingList')
-          SaveItemsToCache('checklistItems', dbItems);
-        };
+          dbItems = await GetItemsFromServer(type)
+          SaveItemsToCache(type, dbItems);
+        });
   
         listItem.appendChild(removeButton);
         itemList.appendChild(listItem);
       });
       
-      SaveItemsToCache('checklistItems', dbItems);
+      SaveItemsToCache(type, dbItems);
     }
   } catch (error) {
     console.error('Error loading items from the database:', error);
