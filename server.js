@@ -1,6 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const { MongoClient } = require('mongodb');
+const { MongoClient, Int32 } = require('mongodb');
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -66,7 +66,7 @@ app.get('/getItems', async (req, res) => {
  */
 app.post('/saveItem', async (req, res) => {
   const type = req.query.type;
-  const { item, item2 } = req.body;
+  const { item, item2, item3, item4, item5 } = req.body;
 
   try {
     switch (type) {
@@ -77,7 +77,7 @@ app.post('/saveItem', async (req, res) => {
         await mealPlanCollection.insertOne({ name: item, weekday: item2 });
         break;
       case "chores":
-        await choresCollection.insertOne({ name: item, person: item2 });
+        await choresCollection.insertOne({ name: item, person: item2, state: item3, lastCompleted: item4, frequency: item5 });
         break;
     }
 

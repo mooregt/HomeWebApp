@@ -56,3 +56,21 @@ function PostItemToServer(itemsEndpoint, type, item, item2) {
     .then(data => console.log('Success:', data))
     .catch(error => console.error('Error:', error));
 }
+
+/**
+ * Posts five items to the server for addition or removal
+ * @param {string} itemsEndpoint 
+ * @param {*} item
+ */
+function PostItemToServer(itemsEndpoint, type, item, item2, item3, item4, item5) {
+  fetch(itemsEndpoint + '?type=' + type, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ item, item2, item3, item4, item5 }),
+  })
+    .then(response => response.json())
+    .then(data => console.log('Success:', data))
+    .catch(error => console.error('Error:', error));
+}
