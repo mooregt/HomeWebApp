@@ -16,6 +16,7 @@ function addItem() {
     var listItem = document.createElement("li");
 
     listItem.textContent = itemInput.value;
+    var itemName = listItem.textContent;
 
     var assignee = document.createElement("button");
     assignee.textContent = person;
@@ -25,7 +26,7 @@ function addItem() {
     var removeButton = document.createElement("button");
     removeButton.textContent = "Remove";
     removeButton.onclick = async function () {
-      PostItemToServer('/removeItem', 'chores', listItem);
+      PostItemToServer('/removeItem', 'chores', itemName);
       itemList.removeChild(listItem);
       dbItems = await GetItemsFromServer('chores')
       SaveItemsToCache('choreItems', dbItems);

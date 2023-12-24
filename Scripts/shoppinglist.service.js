@@ -14,11 +14,12 @@ function addItem() {
     var listItem = document.createElement("li");
 
     listItem.textContent = itemInput.value;
+    var itemName = listItem.textContent;
 
     var removeButton = document.createElement("button");
     removeButton.textContent = "Remove";
     removeButton.onclick = async function () {
-      PostItemToServer('/removeItem', 'shoppingList', listItem);
+      PostItemToServer('/removeItem', 'shoppingList', itemName);
       itemList.removeChild(listItem);
       dbItems = await GetItemsFromServer('shoppingList')
       SaveItemsToCache('checklistItems', dbItems);
