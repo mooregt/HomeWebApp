@@ -62,13 +62,13 @@ function PostItemToServer(itemsEndpoint, type, item, item2) {
  * @param {string} itemsEndpoint 
  * @param {*} item
  */
-function PostItemToServer(itemsEndpoint, type, item, item2, item3, item4, item5) {
+function PostItemToServer(itemsEndpoint, type, item, item2, item3, item4) {
   fetch(itemsEndpoint + '?type=' + type, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify({ item, item2, item3, item4, item5 }),
+    body: JSON.stringify({ item, item2, item3, item4 }),
   })
     .then(response => response.json())
     .then(data => console.log('Success:', data))

@@ -66,7 +66,7 @@ app.get('/getItems', async (req, res) => {
  */
 app.post('/saveItem', async (req, res) => {
   const type = req.query.type;
-  const { item, item2, item3, item4, item5 } = req.body;
+  const { item, item2, item3, item4 } = req.body;
 
   try {
     switch (type) {
@@ -77,7 +77,7 @@ app.post('/saveItem', async (req, res) => {
         await mealPlanCollection.insertOne({ name: item, weekday: item2 });
         break;
       case "chores":
-        await choresCollection.insertOne({ name: item, person: item2, state: item3, lastCompleted: item4, frequency: item5 });
+        await choresCollection.insertOne({ name: item, person: item2, lastCompleted: item3, frequency: item4 });
         break;
     }
 

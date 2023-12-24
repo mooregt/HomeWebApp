@@ -24,16 +24,16 @@ function addItem() {
 
     var removeButton = createRemoveButton(async function () {
       PostItemToServer('/removeItem', type, itemName);
-      PostItemToServer('/saveItem', type, itemName, person, false, new Date(), frequency);
+      PostItemToServer('/saveItem', type, itemName, person, new Date(), frequency);
       itemList.removeChild(listItem);
       dbItems = await GetItemsFromServer(type)
       SaveItemsToCache(type, dbItems);
     });
 
-    AddItemToCache(type, itemInput.value, person, true, "9999-12-31T23:59:59.999Z", frequency);
+    AddItemToCache(type, itemInput.value, person, "1900-01-01T00:00:01.000Z", frequency);
     itemInput.value = "";
 
-    PostItemToServer('/saveItem', type, listItem.textContent, person, true, "9999-12-31T23:59:59.999Z", frequency);
+    PostItemToServer('/saveItem', type, listItem.textContent, person, "1900-01-01T00:00:01.000Z", frequency);
     
     listItem.appendChild(assignee);
     listItem.appendChild(removeButton);
@@ -62,7 +62,9 @@ function loadFromCache(itemList)
   if (cacheItems)
   {
     cacheItems.forEach(item => {
-      if (item.state == true)
+      daysSinceLastCompleted = ((new Date()) - (new Date(item.lastCompleted))) / (1000 * 60 * 60 * 24);
+
+      if (daysSinceLastCompleted >= item.frequency)
       {
         var listItem = createListItem(item.name);
         var assignee = createLabel(item.person);
@@ -90,17 +92,16 @@ async function loadFromDatabase(itemList)
       itemList.innerHTML = "";
       
       dbItems.forEach(item => {
-        currentDate = new Date();
-        daysSinceLastCompleted = (currentDate - (new Date(item.lastCompleted))) / (1000 * 60 * 60 * 24);
+        daysSinceLastCompleted = ((new Date()) - (new Date(item.lastCompleted))) / (1000 * 60 * 60 * 24);
 
-        if (item.state == true || (item.state == false && daysSinceLastCompleted >= item.frequency))
+        if (daysSinceLastCompleted >= item.frequency)
         {
           var listItem = createListItem(item.name);
           var assignee = createLabel(item.person);
 
           var removeButton = createRemoveButton(async function () {
             PostItemToServer('/removeItem', type, item.name);
-            PostItemToServer('/saveItem', type, item.name, item.person, false, new Date(), frequency);
+            PostItemToServer('/saveItem', type, item.name, item.person, new Date(), item.frequency);
             itemList.removeChild(listItem);
             dbItems = await GetItemsFromServer(type)
             SaveItemsToCache(type, dbItems);
