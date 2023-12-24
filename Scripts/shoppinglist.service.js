@@ -17,7 +17,7 @@ function addItem() {
     var listItem = createListItem(itemInput.value)
     var itemName = listItem.textContent;
 
-    var removeButton = createRemoveButton(itemName, async function () {
+    var removeButton = createRemoveButton(async function () {
       PostItemToServer('/removeItem', type, itemName);
       itemList.removeChild(listItem);
       dbItems = await GetItemsFromServer(type)
@@ -46,7 +46,7 @@ async function loadItems() {
     cacheItems.forEach(item => {
       var listItem = createListItem(item.name);
 
-      var removeButton = createRemoveButton(item.name, null);
+      var removeButton = createRemoveButton(null);
       removeButton.disabled = true;
 
       listItem.appendChild(removeButton);
@@ -62,7 +62,7 @@ async function loadItems() {
       dbItems.forEach(item => {
         var listItem = createListItem(item.name);
   
-        var removeButton = createRemoveButton(item.name, async function () {
+        var removeButton = createRemoveButton(async function () {
           PostItemToServer('/removeItem', type, item.name);
           itemList.removeChild(listItem);
           dbItems = await GetItemsFromServer(type)

@@ -19,12 +19,9 @@ function addItem() {
     var listItem = createListItem(itemInput.value);
     var itemName = listItem.textContent;
 
-    var assignee = document.createElement("button");
-    assignee.textContent = person;
-    assignee.disabled = true;
-    assignee.id = person;
+    var assignee = createLabel(person);
 
-    var removeButton = createRemoveButton(itemName, async function () {
+    var removeButton = createRemoveButton(async function () {
       PostItemToServer('/removeItem', type, itemName);
       itemList.removeChild(listItem);
       dbItems = await GetItemsFromServer(type)
@@ -53,13 +50,9 @@ async function loadItems() {
   {
     cacheItems.forEach(item => {
       var listItem = createListItem(item.name);
+      var assignee = createLabel(item.person);
 
-      var assignee = document.createElement("button");
-      assignee.textContent = item.person;
-      assignee.disabled = true;
-      assignee.id = item.person;
-
-      var removeButton = createRemoveButton(item.name, null);
+      var removeButton = createRemoveButton(null);
       removeButton.disabled = true;
 
       listItem.appendChild(assignee);
@@ -75,13 +68,9 @@ async function loadItems() {
       
       dbItems.forEach(item => {
         var listItem = createListItem(item.name);
-  
-        var assignee = document.createElement("button");
-        assignee.textContent = item.person;
-        assignee.disabled = true;
-        assignee.id = item.person;
+        var assignee = createLabel(item.person);
 
-        var removeButton = createRemoveButton(item.name, async function () {
+        var removeButton = createRemoveButton(async function () {
           PostItemToServer('/removeItem', type, item.name);
           itemList.removeChild(listItem);
           dbItems = await GetItemsFromServer(type)

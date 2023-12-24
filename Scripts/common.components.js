@@ -10,9 +10,20 @@ function createListItem(text) {
 /**
  * Helper function to create a remove button.
  */
-function createRemoveButton(itemName, clickHandler) {
+function createRemoveButton(clickHandler) {
   var removeButton = document.createElement("button");
   removeButton.textContent = "Remove";
   removeButton.onclick = clickHandler;
   return removeButton;
+}
+
+/**
+ * Helper function to create a label.
+ */
+function createLabel(labelText) {
+  var label = document.createElement("button");
+  label.textContent = labelText;
+  label.disabled = true;
+  label.id = labelText;
+  return label;
 }
