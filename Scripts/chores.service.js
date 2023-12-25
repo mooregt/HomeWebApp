@@ -24,16 +24,16 @@ function addItem() {
 
     var removeButton = createRemoveButton(async function () {
       PostItemToServer('/removeItem', type, itemName);
-      PostItemToServer('/saveItem', type, itemName, person, new Date(), frequency);
+      PostItemToServer('/saveItem', type, itemName, person, new Date(new Date().setHours(0, 0, 0, 0)), frequency);
       itemList.removeChild(listItem);
       dbItems = await GetItemsFromServer(type)
       SaveItemsToCache(type, dbItems);
     });
 
-    AddItemToCache(type, itemInput.value, person, "1900-01-01T00:00:01.000Z", frequency);
+    AddItemToCache(type, itemInput.value, person, "1900-01-01T00:00:00.000Z", frequency);
     itemInput.value = "";
 
-    PostItemToServer('/saveItem', type, listItem.textContent, person, "1900-01-01T00:00:01.000Z", frequency);
+    PostItemToServer('/saveItem', type, listItem.textContent, person, "1900-01-01T00:00:00.000Z", frequency);
     
     listItem.appendChild(assignee);
     listItem.appendChild(removeButton);
@@ -62,7 +62,7 @@ function loadFromCache(itemList)
   if (cacheItems)
   {
     cacheItems.forEach(item => {
-      daysSinceLastCompleted = ((new Date()) - (new Date(item.lastCompleted))) / (1000 * 60 * 60 * 24);
+      daysSinceLastCompleted = (new Date(new Date().setHours(0, 0, 0, 0)) - new Date(item.lastCompleted)) / (1000 * 60 * 60 * 24);
 
       if (daysSinceLastCompleted >= item.frequency)
       {
@@ -92,7 +92,7 @@ async function loadFromDatabase(itemList)
       itemList.innerHTML = "";
       
       dbItems.forEach(item => {
-        daysSinceLastCompleted = ((new Date()) - (new Date(item.lastCompleted))) / (1000 * 60 * 60 * 24);
+        daysSinceLastCompleted = (new Date(new Date().setHours(0, 0, 0, 0)) - new Date(item.lastCompleted)) / (1000 * 60 * 60 * 24);
 
         if (daysSinceLastCompleted >= item.frequency)
         {
@@ -101,7 +101,7 @@ async function loadFromDatabase(itemList)
 
           var removeButton = createRemoveButton(async function () {
             PostItemToServer('/removeItem', type, item.name);
-            PostItemToServer('/saveItem', type, item.name, item.person, new Date(), item.frequency);
+            PostItemToServer('/saveItem', type, item.name, item.person, new Date(new Date().setHours(0, 0, 0, 0)), item.frequency);
             itemList.removeChild(listItem);
             dbItems = await GetItemsFromServer(type)
             SaveItemsToCache(type, dbItems);
