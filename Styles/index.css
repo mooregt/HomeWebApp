@@ -74,6 +74,11 @@ button#removeButton:hover {
   background-color: #c53232;
 }
 
+/* Remove button styles */
+button#removeButton:disabled {
+  background-color: #dcdcdc;
+}
+
 /* Complete button styles */
 button#completeButton {
   margin-right: 5px;
