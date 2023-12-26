@@ -3,6 +3,7 @@ const type = 'chores';
 
 // On page load
 document.addEventListener('DOMContentLoaded', function () {
+  hideLightbox();
   loadItems();
 });
 
@@ -31,10 +32,7 @@ function addItem() {
     });
 
     var removeButton = createRemoveButton(async function () {
-      PostItemToServer('/removeItem', type, itemName);
-      itemList.removeChild(listItem);
-      dbItems = await GetItemsFromServer(type)
-      SaveItemsToCache(type, dbItems);
+      showLightbox(listItem, itemName);
     });
 
     AddItemToCache(type, itemInput.value, person, "1900-01-01T00:00:00.000Z", frequency);
@@ -119,10 +117,7 @@ async function loadFromDatabase(itemList)
           });
 
           var removeButton = createRemoveButton(async function () {
-            PostItemToServer('/removeItem', type, item.name);
-            itemList.removeChild(listItem);
-            dbItems = await GetItemsFromServer(type)
-            SaveItemsToCache(type, dbItems);
+            showLightbox(listItem, item.name);
           });
     
           listItem.appendChild(assignee);
@@ -137,4 +132,32 @@ async function loadFromDatabase(itemList)
   } catch (error) {
     console.error('Error loading items from the database:', error);
   }
+}
+
+// Function to show the lightbox
+function showLightbox(listItem, itemName) {
+  document.getElementById('confirmationLightbox').style.display = 'flex';
+  var prompt = document.getElementById('confirmation-text');
+  prompt.textContent = `You are about to permanently delete "${itemName}". Would you like to continue?`
+
+  // Attach event listeners to buttons
+  document.getElementById('confirmAction').addEventListener('click', function() {confirmCallback(listItem, itemName)});
+  document.getElementById('cancelAction').addEventListener('click', function() {hideLightbox()});
+}
+
+// Function to hide the lightbox
+function hideLightbox() {
+  document.getElementById('confirmationLightbox').style.display = 'none';
+}
+
+async function confirmCallback(listItem, itemName)
+{
+  var itemList = document.getElementById("itemList");
+
+  itemList.removeChild(listItem);
+  PostItemToServer('/removeItem', type, itemName);
+  var dbItems = await GetItemsFromServer(type)
+  SaveItemsToCache(type, dbItems);
+
+  hideLightbox()
 }
