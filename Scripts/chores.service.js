@@ -22,9 +22,16 @@ function addItem() {
 
     var assignee = createLabel(person);
 
-    var removeButton = createRemoveButton(async function () {
+    var completeButton = createCompleteButton(async function () {
       PostItemToServer('/removeItem', type, itemName);
       PostItemToServer('/saveItem', type, itemName, person, new Date(new Date().setHours(0, 0, 0, 0)), frequency);
+      itemList.removeChild(listItem);
+      dbItems = await GetItemsFromServer(type)
+      SaveItemsToCache(type, dbItems);
+    });
+
+    var removeButton = createRemoveButton(async function () {
+      PostItemToServer('/removeItem', type, itemName);
       itemList.removeChild(listItem);
       dbItems = await GetItemsFromServer(type)
       SaveItemsToCache(type, dbItems);
@@ -36,6 +43,7 @@ function addItem() {
     PostItemToServer('/saveItem', type, listItem.textContent, person, "1900-01-01T00:00:00.000Z", frequency);
     
     listItem.appendChild(assignee);
+    listItem.appendChild(completeButton);
     listItem.appendChild(removeButton);
     itemList.appendChild(listItem);
   }
@@ -69,10 +77,13 @@ function loadFromCache(itemList)
         var listItem = createListItem(item.name);
         var assignee = createLabel(item.person);
 
+        var completeButton = createCompleteButton(null);
+        completeButton.disabled = true;
         var removeButton = createRemoveButton(null);
         removeButton.disabled = true;
 
         listItem.appendChild(assignee);
+        listItem.appendChild(completeButton);
         listItem.appendChild(removeButton);
         itemList.appendChild(listItem);
       }
@@ -99,15 +110,23 @@ async function loadFromDatabase(itemList)
           var listItem = createListItem(item.name);
           var assignee = createLabel(item.person);
 
-          var removeButton = createRemoveButton(async function () {
+          var completeButton = createCompleteButton(async function () {
             PostItemToServer('/removeItem', type, item.name);
             PostItemToServer('/saveItem', type, item.name, item.person, new Date(new Date().setHours(0, 0, 0, 0)), item.frequency);
             itemList.removeChild(listItem);
             dbItems = await GetItemsFromServer(type)
             SaveItemsToCache(type, dbItems);
           });
+
+          var removeButton = createRemoveButton(async function () {
+            PostItemToServer('/removeItem', type, item.name);
+            itemList.removeChild(listItem);
+            dbItems = await GetItemsFromServer(type)
+            SaveItemsToCache(type, dbItems);
+          });
     
           listItem.appendChild(assignee);
+          listItem.appendChild(completeButton);
           listItem.appendChild(removeButton);
           itemList.appendChild(listItem);
         }

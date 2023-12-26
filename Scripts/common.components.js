@@ -12,9 +12,21 @@ function createListItem(text) {
  */
 function createRemoveButton(clickHandler) {
   var removeButton = document.createElement("button");
-  removeButton.textContent = "Remove";
+  removeButton.id = "removeButton";
+  removeButton.className = "fa-solid fa-trash";
   removeButton.onclick = clickHandler;
   return removeButton;
+}
+
+/**
+ * Helper function to create a remove button.
+ */
+function createCompleteButton(clickHandler) {
+  var completeButton = document.createElement("button");
+  completeButton.id = "completeButton";
+  completeButton.className = "fa-solid fa-check";
+  completeButton.onclick = clickHandler;
+  return completeButton;
 }
 
 /**

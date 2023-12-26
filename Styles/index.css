@@ -61,17 +61,23 @@ li {
 }
 
 /* Remove button styles */
-button.remove-button {
-  background-color: #e74c3c;
-  color: #fff;
-  border: none;
-  padding: 5px 8px;
-  margin-left: 10px;
-  cursor: pointer;
+button#removeButton {
+  margin-right: 5px;
+  height: 34px;
+  background-color: #da3232;
 }
 
-button.remove-button:hover {
-  background-color: #c0392b;
+/* Remove button styles */
+button#removeButton:hover {
+  margin-right: 5px;
+  height: 34px;
+  background-color: #c53232;
+}
+
+/* Complete button styles */
+button#completeButton {
+  margin-right: 5px;
+  height: 34px;
 }
 
 /* Disabled button styles */
