@@ -20,14 +20,14 @@
 /* Media query for landscape mode */
 @media screen and (min-width: 768px) {
   #itemList {
-    width: 69%; /* Adjust the width based on your preference */
+    width: 65%; /* Adjust the width based on your preference */
     float: left;
   }
 
   #clock {
-    width: 29%; /* Adjust the width based on your preference */
+    width: 30%; /* Adjust the width based on your preference */
     float: left;
-    margin-left: 0.5%;
+    margin-left: 1%;
   }
 }
 
