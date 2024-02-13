@@ -22,12 +22,13 @@
   #itemList {
     width: 65%; /* Adjust the width based on your preference */
     float: left;
+    margin-top: 1%;
   }
 
   #clock {
     width: 30%; /* Adjust the width based on your preference */
     float: left;
-    margin-left: 1%;
+    margin: 1%;
   }
 }
 

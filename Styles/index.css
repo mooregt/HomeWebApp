@@ -10,11 +10,6 @@ h2 {
   color: #333;
 }
 
-/* General div styles */
-div {
-  margin-bottom: 10px;
-}
-
 /* Text input styles */
 input[type="text"] {
   padding: 8px;
