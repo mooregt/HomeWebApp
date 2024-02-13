@@ -1,0 +1,46 @@
+#clock {
+  background-color: #fff;
+  padding: 10px;
+  margin-bottom: 5px;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+#time {
+  font-size: 2em;
+  font-weight: bold;
+  color: #333; /* Match the heading color */
+}
+
+#date {
+  font-size: 1.2em;
+  color: #666; /* You can adjust the color based on your preference */
+}
+
+/* Media query for landscape mode */
+@media screen and (min-width: 768px) {
+  #itemList {
+    width: 69%; /* Adjust the width based on your preference */
+    float: left;
+  }
+
+  #clock {
+    width: 29%; /* Adjust the width based on your preference */
+    float: left;
+    margin-left: 0.5%;
+  }
+}
+
+/* Media query for vertical display */
+@media screen and (max-width: 767px) {
+  #itemList,
+  #clock {
+    width: 100%;
+    float: none;
+  }
+
+  #clock {
+    order: 2; /* Change the order of the clock to appear at the bottom */
+    margin-top: 20px;
+  }
+}

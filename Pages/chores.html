@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home Hub</title>
     <link rel="stylesheet" href="../Styles/index.css">
+    <link rel="stylesheet" href="../Styles/common.css">
     <link rel="stylesheet" href="../node_modules/@fortawesome/fontawesome-free/css/all.css">
     <link rel="stylesheet" href="../Styles/chores.css">
     <style>
@@ -13,10 +14,6 @@
             margin: 20px;
         }
     </style>
-    <script src="../Scripts/chores.service.js"></script>
-    <script src="../Scripts/common.components.js"></script>
-    <script src="../Scripts/server.repository.js"></script>
-    <script src="../Scripts/cache.repository.js"></script>
 </head>
 <body>
 
@@ -53,6 +50,12 @@
 <ul id="itemList">
 </ul>
 
+<div id="clock">
+    <span id="time"></span>
+    <br>
+    <span id="date"></span>
+</div>
+
 <div class="lightbox" id="confirmationLightbox">
     <div class="confirmation-box">
         <div id="confirmation-text"></div>
@@ -63,5 +66,9 @@
     </div>
 </div>
 
+    <script src="../Scripts/chores.service.js"></script>
+    <script src="../Scripts/common.components.js"></script>
+    <script src="../Scripts/server.repository.js"></script>
+    <script src="../Scripts/cache.repository.js"></script>
 </body>
 </html>

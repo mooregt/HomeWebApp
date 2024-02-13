@@ -6,9 +6,7 @@
     <title>Meal Planner</title>
     <link rel="stylesheet" href="../Styles/index.css">
     <link rel="stylesheet" href="../Styles/mealplan.css">
-    <script src="../Scripts/mealplan.service.js"></script>
-    <script src="../Scripts/server.repository.js"></script>
-    <script src="../Scripts/cache.repository.js"></script>
+    <link rel="stylesheet" href="../Styles/common.css">
 </head>
 <body>
 
@@ -41,43 +39,56 @@
         <!-- Meal plan will be displayed here --> 
     </ul>
     
-    <table id="mealPlanTable">
-        <thead>
-          <tr>
-            <th>Day</th>
-            <th>Meal</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>Monday</td>
-            <td id="mondayMeal">Add a meal above...</td>
-          </tr>
-          <tr>
-            <td>Tuesday</td>
-            <td id="tuesdayMeal">Add a meal above...</td>
-          </tr>
-          <tr>
-            <td>Wednesday</td>
-            <td id="wednesdayMeal">Add a meal above...</td>
-          </tr>
-          <tr>
-            <td>Thursday</td>
-            <td id="thursdayMeal">Add a meal above...</td>
-          </tr>
-          <tr>
-            <td>Friday</td>
-            <td id="fridayMeal">Add a meal above...</td>
-          </tr>
-          <tr>
-            <td>Saturday</td>
-            <td id="saturdayMeal">Add a meal above...</td>
-          </tr>
-          <tr>
-            <td>Sunday</td>
-            <td id="sundayMeal">Add a meal above...</td>
-          </tr>
-        </tbody>
-      </table>
+    <div id="itemList">
+      <table id="mealPlanTable">
+          <thead>
+            <tr>
+              <th>Day</th>
+              <th>Meal</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Monday</td>
+              <td id="mondayMeal">Add a meal above...</td>
+            </tr>
+            <tr>
+              <td>Tuesday</td>
+              <td id="tuesdayMeal">Add a meal above...</td>
+            </tr>
+            <tr>
+              <td>Wednesday</td>
+              <td id="wednesdayMeal">Add a meal above...</td>
+            </tr>
+            <tr>
+              <td>Thursday</td>
+              <td id="thursdayMeal">Add a meal above...</td>
+            </tr>
+            <tr>
+              <td>Friday</td>
+              <td id="fridayMeal">Add a meal above...</td>
+            </tr>
+            <tr>
+              <td>Saturday</td>
+              <td id="saturdayMeal">Add a meal above...</td>
+            </tr>
+            <tr>
+              <td>Sunday</td>
+              <td id="sundayMeal">Add a meal above...</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div id="clock">
+        <span id="time"></span>
+        <br>
+        <span id="date"></span>
+    </div>
+
+    <script src="../Scripts/mealplan.service.js"></script>
+    <script src="../Scripts/common.components.js"></script>
+    <script src="../Scripts/server.repository.js"></script>
+    <script src="../Scripts/cache.repository.js"></script>
 </body>
 </html>
