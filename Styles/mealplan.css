@@ -10,7 +10,7 @@
 }
 
 #mealPlanTable th {
-  background-color: #f2f2f2;
+  background-color: #fbfbfb;
 }
 
 #mealPlanTable tbody tr:hover {
@@ -37,4 +37,14 @@
 #mealPlanTable th:last-child,
 #mealPlanTable td:last-child {
   border-right: none; /* Remove right border for the last column */
+}
+
+#itemList {
+  background-color: #fff;
+  margin-bottom: 5px;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
