@@ -30,6 +30,10 @@
     float: left;
     margin: 1%;
   }
+  
+  #inputField {
+    display: none;
+  }
 }
 
 /* Media query for vertical display */
