@@ -1,6 +1,8 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const { MongoClient, Int32 } = require('mongodb');
+const axios = require('axios');
+const xml2js = require('xml2js');
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -116,6 +118,45 @@ app.post('/removeItem', async (req, res) => {
     res.status(500).send('Internal Server Error');
   }
 });
+
+app.get('/fetchWeather', async (req, res) => {
+  const weatherUrl = 'https://www.gov.im/weather/RssCurrentForecast';
+
+  try {
+    const response = await axios.get(weatherUrl);
+    const xmlData = response.data;
+
+    // Parse XML data correctly using xml2js
+    const parser = new xml2js.Parser();
+    const parsedData = await parser.parseStringPromise(xmlData);
+
+    // Extract relevant information from the XML data
+    const title = parsedData.rss.channel[0].title[0];
+    const description = parsedData.rss.channel[0].description[0];
+    const pubDate = parsedData.rss.channel[0].pubDate[0];
+    const forecastTitle = parsedData.rss.channel[0].item[0].title[0];
+    const forecastDescription = parsedData.rss.channel[0].item[0].description[0];
+    const forecastPubDate = parsedData.rss.channel[0].item[0].pubDate[0];
+
+    // Create a response body model
+    const responseBody = {
+      title,
+      description,
+      pubDate,
+      forecast: {
+        title: forecastTitle,
+        description: forecastDescription,
+        pubDate: forecastPubDate,
+      },
+    };
+
+    res.json(responseBody);
+  } catch (error) {
+    console.error('Error fetching weather data:', error);
+    res.status(500).send('Internal Server Error');
+  }
+});
+
 
 /**
  * Start up the server on the specified port.
