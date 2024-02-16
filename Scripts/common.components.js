@@ -44,7 +44,6 @@ function updateClock() {
   var now = new Date();
   var hours = now.getHours();
   var minutes = now.getMinutes();
-  var seconds = now.getSeconds();
   var ampm = hours >= 12 ? 'PM' : 'AM';
 
   hours = hours % 12;
