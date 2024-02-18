@@ -1,3 +1,5 @@
+const ONE_HOUR = 60 * 60 * 1000;
+
 /**
  * Helper function to create a list item.
  */
@@ -57,4 +59,37 @@ function updateClock() {
   document.getElementById('date').innerHTML = dateString;
 }
 
+function removeHtmlTags(html) {
+  return html.replace(/<[^>]*>/g, ' ');
+}
+
+function updateWeather() {
+  const weatherInfoDiv = document.getElementById('weatherInfo');
+  const todayRegex = /<h3>Detailed forecast<\/h3>(.*?)<h3>Outlook<\/h3>/s;
+  const outlookRegex = /<h3>Outlook<\/h3>(.*?)<h3>Sunrise<\/h3>/s;
+
+  fetch('/getWeather')
+    .then(response => response.json())
+    .then(data => {
+      const todayMatch = data.forecastDescription.match(todayRegex);
+      const forecastToday = todayMatch ? removeHtmlTags(todayMatch[1]) : '';
+
+      const outlookMatch = data.forecastDescription.match(outlookRegex);
+      const forecastOutlook = outlookMatch ? removeHtmlTags(outlookMatch[1]) : '';
+
+      weatherInfoDiv.innerHTML = `
+        <h2 id="weatherHeader">Today</h2>
+        <p>${forecastToday}</p>
+        <h2 id="weatherHeader">Outlook</h2>
+        <p>${forecastOutlook}</p>
+        <p id="weatherUpdated">Last updated: ${data.forecastPubDate}</p>
+      `;
+    })
+    .catch(error => {
+      console.error('Error fetching weather data:', error);
+    });
+}
+
+// Update widgets
 updateClock();
+updateWeather();
