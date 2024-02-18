@@ -7,7 +7,7 @@ const xml2js = require('xml2js');
 const app = express();
 const port = process.env.PORT || 3000;
 
-const ONE_HOUR = 60 * 60 * 1000; // 1 hour in milliseconds
+const TWO_HOURS = 2 * 60 * 60 * 1000; // 2 hours in milliseconds
 
 app.use(express.static(__dirname));
 app.use(bodyParser.json());
@@ -159,7 +159,7 @@ app.get('/getWeather', async (req, res) => {
   }
 });
 
-setInterval(fetchAndStoreWeather, ONE_HOUR);
+setInterval(fetchAndStoreWeather, TWO_HOURS);
 
 /**
  * Start up the server on the specified port.
