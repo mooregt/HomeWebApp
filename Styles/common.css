@@ -1,9 +1,13 @@
-#clock {
+#clock, #weatherInfo {
   background-color: #fff;
   padding: 10px;
-  margin-bottom: 5px;
+  margin-bottom: 18px;
   border-radius: 5px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+#weatherHeader {
+  margin-top: 0px;
 }
 
 #time {
@@ -12,7 +16,7 @@
   color: #333; /* Match the heading color */
 }
 
-#date {
+#date, #weatherUpdated {
   font-size: 1.2em;
   color: #666; /* You can adjust the color based on your preference */
 }
@@ -25,7 +29,7 @@
     margin-top: 1%;
   }
 
-  #clock {
+  #widgetsRight {
     width: 30%; /* Adjust the width based on your preference */
     float: left;
     margin: 1%;
@@ -39,7 +43,7 @@
     float: none;
   }
 
-  #clock {
+  #widgetsRight {
     display: none;
   }
 }

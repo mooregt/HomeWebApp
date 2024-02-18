@@ -7,6 +7,8 @@ const xml2js = require('xml2js');
 const app = express();
 const port = process.env.PORT || 3000;
 
+const ONE_HOUR = 60 * 60 * 1000; // 1 hour in milliseconds
+
 app.use(express.static(__dirname));
 app.use(bodyParser.json());
 
@@ -22,6 +24,30 @@ async function connectToMongo(dbName, collectionName) {
   
   await client.connect();
   return client.db(dbName).collection(collectionName);
+}
+
+async function fetchAndStoreWeather() {
+  const weatherUrl = 'https://www.gov.im/weather/RssCurrentForecast';
+
+  try {
+    const response = await axios.get(weatherUrl);
+    const xmlData = response.data;
+
+    const parser = new xml2js.Parser();
+    const parsedData = await parser.parseStringPromise(xmlData);
+
+    const title = parsedData.rss.channel[0].title[0];
+    const description = parsedData.rss.channel[0].description[0];
+    const pubDate = parsedData.rss.channel[0].pubDate[0];
+    const forecastTitle = parsedData.rss.channel[0].item[0].title[0];
+    const forecastDescription = parsedData.rss.channel[0].item[0].description[0];
+    const forecastPubDate = parsedData.rss.channel[0].item[0].pubDate[0];
+
+    weatherCollection.insertOne({ title: title, description: description, pubDate: pubDate, forecastTitle: forecastTitle, forecastDescription: forecastDescription, forecastPubDate: forecastPubDate });
+
+  } catch (error) {
+    console.error('Error fetching weather data:', error);
+  }
 }
 
 /**
@@ -119,44 +145,21 @@ app.post('/removeItem', async (req, res) => {
   }
 });
 
-app.get('/fetchWeather', async (req, res) => {
-  const weatherUrl = 'https://www.gov.im/weather/RssCurrentForecast';
-
+app.get('/getWeather', async (req, res) => {
   try {
-    const response = await axios.get(weatherUrl);
-    const xmlData = response.data;
+    var item;
 
-    // Parse XML data correctly using xml2js
-    const parser = new xml2js.Parser();
-    const parsedData = await parser.parseStringPromise(xmlData);
-
-    // Extract relevant information from the XML data
-    const title = parsedData.rss.channel[0].title[0];
-    const description = parsedData.rss.channel[0].description[0];
-    const pubDate = parsedData.rss.channel[0].pubDate[0];
-    const forecastTitle = parsedData.rss.channel[0].item[0].title[0];
-    const forecastDescription = parsedData.rss.channel[0].item[0].description[0];
-    const forecastPubDate = parsedData.rss.channel[0].item[0].pubDate[0];
-
-    // Create a response body model
-    const responseBody = {
-      title,
-      description,
-      pubDate,
-      forecast: {
-        title: forecastTitle,
-        description: forecastDescription,
-        pubDate: forecastPubDate,
-      },
-    };
-
-    res.json(responseBody);
-  } catch (error) {
-    console.error('Error fetching weather data:', error);
+    item = await weatherCollection.findOne({}, {sort: {forecastPubDate: -1}});
+    
+    res.json(item);
+  }
+  catch (error) {
+    console.error('Error reading items from MongoDB:', error);
     res.status(500).send('Internal Server Error');
   }
 });
 
+setInterval(fetchAndStoreWeather, ONE_HOUR);
 
 /**
  * Start up the server on the specified port.
@@ -165,6 +168,7 @@ app.listen(port, '0.0.0.0', async () => {
     shoppingListCollection = await connectToMongo('shopping', 'items');
     mealPlanCollection = await connectToMongo('mealPlan', 'items');
     choresCollection = await connectToMongo('chores', 'items');
+    weatherCollection = await connectToMongo('weather', 'items');
+    
     console.log(`Server is running at http://${require('os').hostname()}:${port}`);
 });
-

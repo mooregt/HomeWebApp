@@ -1,4 +1,4 @@
-const ONE_HOUR = 60 * 60 * 1000; // 1 hour in milliseconds
+const ONE_HOUR = 60 * 60 * 1000;
 
 /**
  * Helper function to create a list item.
@@ -59,44 +59,37 @@ function updateClock() {
   document.getElementById('date').innerHTML = dateString;
 }
 
+function removeHtmlTags(html) {
+  return html.replace(/<[^>]*>/g, ' ');
+}
+
 function updateWeather() {
   const weatherInfoDiv = document.getElementById('weatherInfo');
-  const lastFetchTimestamp = localStorage.getItem('lastFetchTimestamp');
-  const currentTimestamp = new Date().getTime();
+  const todayRegex = /<h3>Detailed forecast<\/h3>(.*?)<h3>Outlook<\/h3>/s;
+  const outlookRegex = /<h3>Outlook<\/h3>(.*?)<h3>Sunrise<\/h3>/s;
 
-  // Make a request to the /fetchWeather endpoint
-  fetch('/fetchWeather')
+  fetch('/getWeather')
     .then(response => response.json())
     .then(data => {
-      // Update the content of the weatherInfo div
-      populateWeather(data.title,data.description,data.pubDate)
+      const todayMatch = data.forecastDescription.match(todayRegex);
+      const forecastToday = todayMatch ? removeHtmlTags(todayMatch[1]) : '';
 
-      // Update the last fetch timestamp in local storage
-      localStorage.setItem('WeatherTimestamp', currentTimestamp);
-      localStorage.setItem('WeatherTitle', data.title);
-      localStorage.setItem('WeatherDescription', data.description);
-      localStorage.setItem('WeatherPubDate', data.pubDate);
+      const outlookMatch = data.forecastDescription.match(outlookRegex);
+      const forecastOutlook = outlookMatch ? removeHtmlTags(outlookMatch[1]) : '';
+
+      weatherInfoDiv.innerHTML = `
+        <h2 id="weatherHeader">Today</h2>
+        <p>${forecastToday}</p>
+        <h2 id="weatherHeader">Outlook</h2>
+        <p>${forecastOutlook}</p>
+        <p id="weatherUpdated">Last updated: ${data.forecastPubDate}</p>
+      `;
     })
     .catch(error => {
       console.error('Error fetching weather data:', error);
     });
 }
 
-function populateWeather(title, description, pubDate) {
-  try {
-    const weatherInfoDiv = document.getElementById('weatherInfo');
-
-    weatherInfoDiv.innerHTML = `
-      <h2>${title}</h2>
-      <p>${description}</p>
-      <p>Publication Date: ${pubDate}</p>
-    `;
-  } catch (error) {
-    console.error('Error populating weather data:', error);
-    // Handle the error appropriately, e.g., display a message to the user
-  }
-}
-
+// Update widgets
 updateClock();
-populateWeather(localStorage.getItem('WeatherTitle'),localStorage.getItem('WeatherDescription'),localStorage.getItem('WeatherPubDate'))
-setInterval(updateWeather, ONE_HOUR);
+updateWeather();
