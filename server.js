@@ -7,7 +7,9 @@ const xml2js = require('xml2js');
 const app = express();
 const port = process.env.PORT || 3000;
 
-const ONE_HOUR = 60 * 60 * 1000; // 1 hour in milliseconds
+const TWO_HOURS = 2 * 60 * 60 * 1000; // 2 hours in milliseconds
+const DAY_START_HOUR = 6; // Adjust as per your daytime start hour
+const DAY_END_HOUR = 22; // Adjust as per your daytime end hour
 
 app.use(express.static(__dirname));
 app.use(bodyParser.json());
@@ -27,27 +29,36 @@ async function connectToMongo(dbName, collectionName) {
 }
 
 async function fetchAndStoreWeather() {
-  const weatherUrl = 'https://www.gov.im/weather/RssCurrentForecast';
+  const currentHour = new Date().getHours();
 
-  try {
-    const response = await axios.get(weatherUrl);
-    const xmlData = response.data;
+  // Check if the current time is within daytime hours
+  if (currentHour >= DAY_START_HOUR && currentHour < DAY_END_HOUR) {
+    const weatherUrl = 'https://www.gov.im/weather/RssCurrentForecast';
 
-    const parser = new xml2js.Parser();
-    const parsedData = await parser.parseStringPromise(xmlData);
+    try {
+      const response = await axios.get(weatherUrl);
+      const xmlData = response.data;
 
-    const title = parsedData.rss.channel[0].title[0];
-    const description = parsedData.rss.channel[0].description[0];
-    const pubDate = parsedData.rss.channel[0].pubDate[0];
-    const forecastTitle = parsedData.rss.channel[0].item[0].title[0];
-    const forecastDescription = parsedData.rss.channel[0].item[0].description[0];
-    const forecastPubDate = parsedData.rss.channel[0].item[0].pubDate[0];
+      const parser = new xml2js.Parser();
+      const parsedData = await parser.parseStringPromise(xmlData);
 
-    weatherCollection.insertOne({ title: title, description: description, pubDate: pubDate, forecastTitle: forecastTitle, forecastDescription: forecastDescription, forecastPubDate: forecastPubDate });
+      const title = parsedData.rss.channel[0].title[0];
+      const description = parsedData.rss.channel[0].description[0];
+      const pubDate = parsedData.rss.channel[0].pubDate[0];
+      const forecastTitle = parsedData.rss.channel[0].item[0].title[0];
+      const forecastDescription = parsedData.rss.channel[0].item[0].description[0];
+      const forecastPubDate = parsedData.rss.channel[0].item[0].pubDate[0];
 
-  } catch (error) {
-    console.error('Error fetching weather data:', error);
+      weatherCollection.insertOne({ title: title, description: description, pubDate: pubDate, forecastTitle: forecastTitle, forecastDescription: forecastDescription, forecastPubDate: forecastPubDate });
+
+    } catch (error) {
+      console.error('Error fetching weather data:', error);
+    }
   }
+}
+
+async function getWeatherLatest() {
+  return await weatherCollection.findOne({}, {sort: {forecastPubDate: -1}});
 }
 
 /**
@@ -149,7 +160,7 @@ app.get('/getWeather', async (req, res) => {
   try {
     var item;
 
-    item = await weatherCollection.findOne({}, {sort: {forecastPubDate: -1}});
+    item = await getWeatherLatest();
     
     res.json(item);
   }
@@ -159,7 +170,7 @@ app.get('/getWeather', async (req, res) => {
   }
 });
 
-setInterval(fetchAndStoreWeather, ONE_HOUR);
+setInterval(fetchAndStoreWeather, TWO_HOURS);
 
 /**
  * Start up the server on the specified port.
