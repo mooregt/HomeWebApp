@@ -34,6 +34,7 @@ async function fetchAndStoreWeather() {
   // Check if the current time is within daytime hours
   if (currentHour >= DAY_START_HOUR && currentHour < DAY_END_HOUR) {
     const weatherUrl = 'https://www.gov.im/weather/RssCurrentForecast';
+    var currentDate = new Date();
 
     try {
       const response = await axios.get(weatherUrl);
@@ -44,12 +45,11 @@ async function fetchAndStoreWeather() {
 
       const title = parsedData.rss.channel[0].title[0];
       const description = parsedData.rss.channel[0].description[0];
-      const pubDate = parsedData.rss.channel[0].pubDate[0];
       const forecastTitle = parsedData.rss.channel[0].item[0].title[0];
       const forecastDescription = parsedData.rss.channel[0].item[0].description[0];
       const forecastPubDate = parsedData.rss.channel[0].item[0].pubDate[0];
 
-      weatherCollection.insertOne({ title: title, description: description, pubDate: pubDate, forecastTitle: forecastTitle, forecastDescription: forecastDescription, forecastPubDate: forecastPubDate });
+      weatherCollection.insertOne({ title: title, description: description, pubDate: currentDate, forecastTitle: forecastTitle, forecastDescription: forecastDescription, forecastPubDate: forecastPubDate });
 
     } catch (error) {
       console.error('Error fetching weather data:', error);
@@ -58,7 +58,7 @@ async function fetchAndStoreWeather() {
 }
 
 async function getWeatherLatest() {
-  return await weatherCollection.findOne({}, {sort: {forecastPubDate: -1}});
+  return await weatherCollection.findOne({}, {sort: {pubDate: -1}});
 }
 
 /**
@@ -170,7 +170,7 @@ app.get('/getWeather', async (req, res) => {
   }
 });
 
-setInterval(fetchAndStoreWeather, TWO_HOURS);
+// setInterval(fetchAndStoreWeather, TWO_HOURS);
 
 /**
  * Start up the server on the specified port.
@@ -180,6 +180,8 @@ app.listen(port, '0.0.0.0', async () => {
     mealPlanCollection = await connectToMongo('mealPlan', 'items');
     choresCollection = await connectToMongo('chores', 'items');
     weatherCollection = await connectToMongo('weather', 'items');
+
+    fetchAndStoreWeather();
     
     console.log(`Server is running at http://${require('os').hostname()}:${port}`);
 });
