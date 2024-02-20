@@ -49,8 +49,18 @@ async function fetchAndStoreWeather() {
       const forecastDescription = parsedData.rss.channel[0].item[0].description[0];
       const forecastPubDate = parsedData.rss.channel[0].item[0].pubDate[0];
 
-      weatherCollection.insertOne({ title: title, description: description, pubDate: currentDate, forecastTitle: forecastTitle, forecastDescription: forecastDescription, forecastPubDate: forecastPubDate });
-
+      const latestWeather = await getWeatherLatest();
+      if (!latestWeather || latestWeather.forecastPubDate !== forecastPubDate) {
+        weatherCollection.insertOne({
+          title: title,
+          description: description,
+          pubDate: currentDate,
+          forecastTitle: forecastTitle,
+          forecastDescription: forecastDescription,
+          forecastPubDate: forecastPubDate
+        });
+      }
+      
     } catch (error) {
       console.error('Error fetching weather data:', error);
     }
