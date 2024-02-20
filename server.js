@@ -60,7 +60,7 @@ async function fetchAndStoreWeather() {
           forecastPubDate: forecastPubDate
         });
       }
-      
+
     } catch (error) {
       console.error('Error fetching weather data:', error);
     }
@@ -180,7 +180,7 @@ app.get('/getWeather', async (req, res) => {
   }
 });
 
-// setInterval(fetchAndStoreWeather, TWO_HOURS);
+setInterval(fetchAndStoreWeather, TWO_HOURS);
 
 /**
  * Start up the server on the specified port.
@@ -190,8 +190,6 @@ app.listen(port, '0.0.0.0', async () => {
     mealPlanCollection = await connectToMongo('mealPlan', 'items');
     choresCollection = await connectToMongo('chores', 'items');
     weatherCollection = await connectToMongo('weather', 'items');
-
-    fetchAndStoreWeather();
     
     console.log(`Server is running at http://${require('os').hostname()}:${port}`);
 });
