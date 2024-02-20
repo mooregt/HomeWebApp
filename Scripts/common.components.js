@@ -65,8 +65,8 @@ function removeHtmlTags(html) {
 
 function updateWeather() {
   const weatherInfoDiv = document.getElementById('weatherInfo');
-  const todayRegex = /<h3>Detailed forecast<\/h3>(.*?)<h3>Outlook<\/h3>/s;
-  const outlookRegex = /<h3>Outlook<\/h3>(.*?)<h3>Sunrise<\/h3>/s;
+  const todayRegex = /<p>(.*?)<\/p><p>/s;
+  const outlookRegex = /<\/p><p>(.*?)<\/p>/s;
 
   fetch('/getWeather')
     .then(response => response.json())
@@ -80,9 +80,9 @@ function updateWeather() {
       weatherInfoDiv.innerHTML = `
         <h2 id="weatherHeader">Today</h2>
         <p>${forecastToday}</p>
-        <h2 id="weatherHeader">Outlook</h2>
+        <h2 id="weatherHeader">Tomorrow</h2>
         <p>${forecastOutlook}</p>
-        <p id="weatherUpdated">Last updated: ${data.forecastPubDate}</p>
+        <p id="weatherUpdated">Updated: ${data.forecastPubDate}</p>
       `;
     })
     .catch(error => {
