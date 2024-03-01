@@ -86,27 +86,3 @@ button:disabled {
   color: #a0a0a0;
   cursor: not-allowed;
 }
-
-/* Navbar styles */
-#navbar {
-  background-color: #aaa;
-  overflow: hidden;
-  border-radius: 25px;
-}
-
-/* Navbar link styles */
-#navbar a {
-  float: left;
-  display: block;
-  color: white;
-  text-align: center;
-  padding: 14px 16px;
-  text-decoration: none;
-  font-weight: bold;
-  border-radius: 25px;
-}
-
-#navbar a:hover {
-  background-color: #e3e3e3;
-  color: black;
-}
