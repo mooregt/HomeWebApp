@@ -25,7 +25,7 @@
 #mealPlanTable td[id^="saturday"],
 #mealPlanTable td[id^="sunday"] {
   font-weight: bold;
-  color: #4CAF50; /* or your preferred color */
+  color: #2f83bf; /* or your preferred color */
 }
 
 #mealPlanTable th,
