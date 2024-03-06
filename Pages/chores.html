@@ -26,14 +26,14 @@
 
 <div id="inputField">
     <form>
-        <label for="person">Assigned to:</label>
-        <select id="person" name="person">
+        <select class="choreSelector" id="person" name="person">
+            <option value="" disabled selected hidden>Assigned to</option>
             <option value="Laura">Laura</option>
             <option value="George">George</option>
         </select>
 
-        <label for="frequency">Frequency:</label>
-        <select id="frequency" name="frequency">
+        <select class="choreSelector" id="frequency" name="frequency">
+            <option value="" disabled selected hidden>Frequency</option>
             <option value=36500>Once</option>
             <option value=1>Daily</option>
             <option value=7>Weekly</option>
@@ -42,10 +42,9 @@
             <option value=365>Yearly</option>
         </select>
 
-        <label for="choreInput">Chore:</label>
-        <input type="text" id="choreInput" name="chore" placeholder="Enter item">
+        <input type="text" id="choreInput" name="chore" placeholder="Enter chore">
 
-        <button type="button" onclick="addItem()">Add Item</button>
+        <button type="button" class="fa-solid fa-plus" onclick="addItem()"></button>
     </form>
 </div>
 

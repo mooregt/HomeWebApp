@@ -49,3 +49,13 @@
   padding: 10px 20px;
   cursor: pointer;
 }
+
+.choreSelector {
+  width: 300px;
+  margin-bottom: 10px;
+  margin-right: 5px;
+}
+
+#choreInput {
+  width:280px;
+}

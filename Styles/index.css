@@ -86,3 +86,7 @@ button:disabled {
   color: #a0a0a0;
   cursor: not-allowed;
 }
+
+#itemInput {
+  width:280px;
+}
