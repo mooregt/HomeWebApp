@@ -23,6 +23,18 @@
   margin-right: 5px;
 }
 
+#Both {
+  padding: 8px 12px;
+  font-size: 16px;
+  cursor: pointer;
+  background-color: #29bd91;
+  color: #fff;
+  border: none;
+  border-radius: 3px;
+  margin-left: auto;
+  margin-right: 5px;
+}
+
 /* Style for the lightbox */
 .lightbox {
   display: none;
