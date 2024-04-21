@@ -12,6 +12,8 @@ document.addEventListener('DOMContentLoaded', function () {
  */
 function addItem() {
   var itemInput = document.getElementById("choreInput");
+  const currentDate = new Date(new Date().setHours(0, 0, 0, 0));
+  const oldestDate = "1900-01-01T00:00:00.000Z";
   const person = document.getElementById('person').value;
   const frequency = document.getElementById('frequency').value;
 
@@ -24,8 +26,8 @@ function addItem() {
     var assignee = createLabel(person);
 
     var completeButton = createCompleteButton(async function () {
-      PostItemToServer('/removeItem', type, itemName);
-      PostItemToServer('/saveItem', type, itemName, person, new Date(new Date().setHours(0, 0, 0, 0)), frequency);
+      PostItemToServer('/removeItem', type, { item: itemName });
+      PostItemToServer('/saveItem', type, { item: itemName, person: person, lastCompleted: currentDate, frequency: frequency });
       itemList.removeChild(listItem);
       dbItems = await GetItemsFromServer(type)
       SaveItemsToCache(type, dbItems);
@@ -35,10 +37,10 @@ function addItem() {
       showLightbox(listItem, itemName);
     });
 
-    AddItemToCache(type, {_id: "", name: itemInput.value, person: person, lastCompleted: "1900-01-01T00:00:00.000Z", frequency: frequency})
+    AddItemToCache(type, {_id: "", name: itemInput.value, person: person, lastCompleted: oldestDate, frequency: frequency})
     itemInput.value = "";
 
-    PostItemToServer('/saveItem', type, listItem.textContent, person, "1900-01-01T00:00:00.000Z", frequency);
+    PostItemToServer('/saveItem', type, { item: itemName, person: person, lastCompleted: oldestDate, frequency: frequency });
     
     listItem.appendChild(assignee);
     listItem.appendChild(completeButton);
@@ -101,23 +103,28 @@ async function loadFromDatabase(itemList)
       itemList.innerHTML = "";
       
       dbItems.forEach(item => {
-        daysSinceLastCompleted = (new Date(new Date().setHours(0, 0, 0, 0)) - new Date(item.lastCompleted)) / (1000 * 60 * 60 * 24);
+        const itemName = item.name;
+        const person = item.person;
+        const currentDate = new Date(new Date().setHours(0, 0, 0, 0));
+        const frequency = item.frequency;
+        const daysSinceLastCompleted = (currentDate - new Date(item.lastCompleted)) / (1000 * 60 * 60 * 24);
 
-        if (daysSinceLastCompleted >= item.frequency)
+        if (daysSinceLastCompleted >= frequency)
         {
-          var listItem = createListItem(item.name);
-          var assignee = createLabel(item.person);
+          var listItem = createListItem(itemName);
+          var assignee = createLabel(person);
 
           var completeButton = createCompleteButton(async function () {
-            PostItemToServer('/removeItem', type, item.name);
-            PostItemToServer('/saveItem', type, item.name, item.person, new Date(new Date().setHours(0, 0, 0, 0)), item.frequency);
+            PostItemToServer('/removeItem', type, { item: itemName });
+            PostItemToServer('/saveItem', type, { item: itemName, person: person, lastCompleted: currentDate, frequency: frequency });
+            
             itemList.removeChild(listItem);
             dbItems = await GetItemsFromServer(type)
             SaveItemsToCache(type, dbItems);
           });
 
           var removeButton = createRemoveButton(async function () {
-            showLightbox(listItem, item.name);
+            showLightbox(listItem, itemName);
           });
     
           listItem.appendChild(assignee);
@@ -155,7 +162,7 @@ async function confirmCallback(listItem, itemName)
   var itemList = document.getElementById("itemList");
 
   itemList.removeChild(listItem);
-  PostItemToServer('/removeItem', type, itemName);
+  PostItemToServer('/removeItem', type, { item: itemName });
   var dbItems = await GetItemsFromServer(type)
   SaveItemsToCache(type, dbItems);
 

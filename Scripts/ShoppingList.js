@@ -18,7 +18,7 @@ function addItem() {
     var itemName = listItem.textContent;
 
     var removeButton = createCompleteButton(async function () {
-      PostItemToServer('/removeItem', type, itemName);
+      PostItemToServer('/removeItem', type, { item: itemName });
       itemList.removeChild(listItem);
       dbItems = await GetItemsFromServer(type)
       SaveItemsToCache(type, dbItems);
@@ -27,7 +27,7 @@ function addItem() {
     AddItemToCache(type, {_id: "", name: itemInput.value})
     itemInput.value = "";
     
-    PostItemToServer('/saveItem', type, listItem.textContent);
+    PostItemToServer('/saveItem', type, { item: itemName });
 
     listItem.appendChild(removeButton);
     itemList.appendChild(listItem);
@@ -78,10 +78,11 @@ async function loadFromDatabase(itemList)
       itemList.innerHTML = "";
       
       dbItems.forEach(item => {
-        var listItem = createListItem(item.name);
+        const itemName = item.name;
+        var listItem = createListItem(itemName);
   
         var removeButton = createCompleteButton(async function () {
-          PostItemToServer('/removeItem', type, item.name);
+          PostItemToServer('/removeItem', type, { item: itemName });
           itemList.removeChild(listItem);
           dbItems = await GetItemsFromServer(type)
           SaveItemsToCache(type, dbItems);

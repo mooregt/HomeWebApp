@@ -7,17 +7,18 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 function addItem() {
-  var mealInput = document.getElementById("mealInput");
+  const meal = document.getElementById("mealInput").value;
   const day = document.getElementById('day').value;
+  const formattedDay = day.charAt(0).toUpperCase() + day.slice(1);
 
-  if (mealInput.value.trim() !== "") {
-    AddItemToCache(type, {_id: "", name: mealInput.value, weekday: (day.charAt(0).toUpperCase() + day.slice(1))})
+  if (meal.trim() !== "") {
+    AddItemToCache(type, {_id: "", name: meal, weekday: formattedDay})
 
-    PostItemToServer('/removeItem', type, (day.charAt(0).toUpperCase() + day.slice(1)));
-    PostItemToServer('/saveItem', type, mealInput.value, (day.charAt(0).toUpperCase() + day.slice(1)));
+    PostItemToServer('/removeItem', type, { weekday: formattedDay });
+    PostItemToServer('/saveItem', type, { item: meal, weekday: formattedDay });
 
     loadItems();
-    mealInput.value = "";
+    meal = "";
   }
 }
 

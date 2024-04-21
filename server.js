@@ -115,18 +115,17 @@ app.get('/getItems', async (req, res) => {
  */
 app.post('/saveItem', async (req, res) => {
   const type = req.query.type;
-  const { item, item2, item3, item4 } = req.body;
 
   try {
     switch (type) {
       case "shoppingList":
-        await shoppingListCollection.insertOne({ name: item });
+        await shoppingListCollection.insertOne({ name: req.body.item });
         break;
       case "mealPlan":
-        await mealPlanCollection.insertOne({ name: item, weekday: item2 });
+        await mealPlanCollection.insertOne({ name: req.body.item, weekday: req.body.weekday });
         break;
       case "chores":
-        await choresCollection.insertOne({ name: item, person: item2, lastCompleted: item3, frequency: item4 });
+        await choresCollection.insertOne({ name: req.body.item, person: req.body.person, lastCompleted: req.body.lastCompleted, frequency: req.body.frequency });
         break;
     }
 
@@ -144,18 +143,17 @@ app.post('/saveItem', async (req, res) => {
  */
 app.post('/removeItem', async (req, res) => {
   const type = req.query.type;
-  const { item } = req.body;
 
   try {
     switch (type) {
       case "shoppingList":
-        await shoppingListCollection.deleteOne({ name: item });
+        await shoppingListCollection.deleteOne({ name: req.body.item });
         break;
       case "mealPlan":
-        await mealPlanCollection.deleteOne({ weekday: item });
+        await mealPlanCollection.deleteOne({ weekday: req.body.weekday });
         break;
       case "chores":
-        await choresCollection.deleteOne({ name: item });
+        await choresCollection.deleteOne({ name: req.body.item });
         break;
     }
 
