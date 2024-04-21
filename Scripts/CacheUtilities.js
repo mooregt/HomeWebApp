@@ -1,44 +1,32 @@
 /**
  * Retrieves an array of items from the cache.
- * @param {string} itemsName 
+ * @param {string} key identifier of cache.
  * @returns {JSON} The items retrieved from cache.
  */
-function GetItemsFromCache(itemsName) {
-  const storedItems = localStorage.getItem(itemsName);
+function GetItemsFromCache(key) {
+  const cachedItems = localStorage.getItem(key);
 
-  if (storedItems) {
-    return JSON.parse(storedItems);
+  if (cachedItems) {
+    return JSON.parse(cachedItems);
   }
 }
 
 /**
- * Saves an array of items to the cache.
- * @param {string} itemsName
- * @param {JSON} items
+ * Saves an array of items to the cache without persisting existing cache.
+ * @param {string} key identifier of cache.
+ * @param {JSON} items to save to cache.
  */
-function SaveItemsToCache(itemsName, items) {
-  localStorage.setItem(itemsName, JSON.stringify(items));
+function SaveItemsToCache(key, items) {
+  localStorage.setItem(key, JSON.stringify(items));
 }
 
 /**
- * Adds a single item to the cache.
- * @param {string} itemsName
- * @param {string} item
+ * Adds an item to the existing cache.
+ * @param {string} key identifier of cache.
+ * @param {JSON} item to add to cache.
  */
-function AddItemToCache(itemsName, item) {
-  var items = GetItemsFromCache(itemsName)
-  items.push({_id: "", name: item});
-  localStorage.setItem(itemsName, JSON.stringify(items));
-}
-
-function AddMealToCache(itemsName, item, day) {
-  var items = GetItemsFromCache(itemsName)
-  items.push({_id: "", name: item, weekday: day});
-  localStorage.setItem(itemsName, JSON.stringify(items));
-}
-
-function AddItemToCache(itemsName, name, person, lastCompleted, frequency) {
-  var items = GetItemsFromCache(itemsName)
-  items.push({_id: "", name: name, person: person, lastCompleted: lastCompleted, frequency: frequency});
-  localStorage.setItem(itemsName, JSON.stringify(items));
+function AddItemToCache(key, item) {
+  var cachedItems = GetItemsFromCache(key)
+  cachedItems.push(item);
+  localStorage.setItem(key, JSON.stringify(cachedItems));
 }

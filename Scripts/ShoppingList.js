@@ -24,7 +24,7 @@ function addItem() {
       SaveItemsToCache(type, dbItems);
     });
 
-    AddItemToCache(type, itemInput.value);
+    AddItemToCache(type, {_id: "", name: itemInput.value})
     itemInput.value = "";
     
     PostItemToServer('/saveItem', type, listItem.textContent);

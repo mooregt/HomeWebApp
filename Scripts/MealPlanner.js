@@ -11,7 +11,7 @@ function addItem() {
   const day = document.getElementById('day').value;
 
   if (mealInput.value.trim() !== "") {
-    AddMealToCache(type, mealInput.value, (day.charAt(0).toUpperCase() + day.slice(1)));
+    AddItemToCache(type, {_id: "", name: mealInput.value, weekday: (day.charAt(0).toUpperCase() + day.slice(1))})
 
     PostItemToServer('/removeItem', type, (day.charAt(0).toUpperCase() + day.slice(1)));
     PostItemToServer('/saveItem', type, mealInput.value, (day.charAt(0).toUpperCase() + day.slice(1)));

@@ -35,7 +35,7 @@ function addItem() {
       showLightbox(listItem, itemName);
     });
 
-    AddItemToCache(type, itemInput.value, person, "1900-01-01T00:00:00.000Z", frequency);
+    AddItemToCache(type, {_id: "", name: itemInput.value, person: person, lastCompleted: "1900-01-01T00:00:00.000Z", frequency: frequency})
     itemInput.value = "";
 
     PostItemToServer('/saveItem', type, listItem.textContent, person, "1900-01-01T00:00:00.000Z", frequency);
