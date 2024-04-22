@@ -103,9 +103,12 @@ button:disabled {
 }
 
 #tempLow, #tempHigh, #tempAvg {
-  margin-right: 18px;
-  width: 8vw;
-  height: 8vw;
+  width: 30%;
+  height: 15vh;
+}
+
+#tempLow, #tempHigh {
+  margin-right: 5%;
 }
 
 #tempContainer {
