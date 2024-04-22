@@ -94,12 +94,22 @@ button:disabled {
 /**
  * Right-hand side widget styles
  */
-#clock, #weatherInfo {
+#clock, #weatherInfo, #tempLow, #tempHigh, #tempAvg {
   background-color: #fff;
   padding: 10px;
   margin-bottom: 18px;
   border-radius: 5px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+#tempLow, #tempHigh, #tempAvg {
+  margin-right: 18px;
+  width: 8vw;
+  height: 8vw;
+}
+
+#tempContainer {
+  display: flex;
 }
 
 #weatherHeader {
@@ -112,7 +122,7 @@ button:disabled {
   color: #333; /* Match the heading color */
 }
 
-#date, #weatherUpdated {
+#date, #weatherUpdated, #tempLow, #tempHigh, #tempAvg {
   font-size: 1.2em;
   color: #2f83bf; /* You can adjust the color based on your preference */
 }
