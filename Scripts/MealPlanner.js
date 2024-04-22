@@ -1,7 +1,5 @@
-// Initialise global constants
 const type = 'mealPlan';
 
-// On page load
 document.addEventListener('DOMContentLoaded', function () {
   loadItems();
 });

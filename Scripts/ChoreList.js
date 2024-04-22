@@ -1,7 +1,5 @@
-// Initialise global constants
 const type = 'chores';
 
-// On page load
 document.addEventListener('DOMContentLoaded', function () {
   hideLightbox();
   loadItems();
@@ -141,18 +139,15 @@ async function loadFromDatabase(itemList)
   }
 }
 
-// Function to show the lightbox
 function showLightbox(listItem, itemName) {
   document.getElementById('confirmationLightbox').style.display = 'flex';
   var prompt = document.getElementById('confirmation-text');
   prompt.textContent = `You are about to permanently delete "${itemName}". Would you like to continue?`
 
-  // Attach event listeners to buttons
   document.getElementById('confirmAction').addEventListener('click', function() {confirmCallback(listItem, itemName)});
   document.getElementById('cancelAction').addEventListener('click', function() {hideLightbox()});
 }
 
-// Function to hide the lightbox
 function hideLightbox() {
   document.getElementById('confirmationLightbox').style.display = 'none';
 }

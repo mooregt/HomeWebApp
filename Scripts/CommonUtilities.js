@@ -1,5 +1,10 @@
 const ONE_HOUR = 60 * 60 * 1000;
 
+document.addEventListener('DOMContentLoaded', function () {
+  updateClock();
+  updateWeather();
+});
+
 /**
  * Helper function to create a list item.
  */
@@ -49,7 +54,7 @@ function updateClock() {
   var ampm = hours >= 12 ? 'PM' : 'AM';
 
   hours = hours % 12;
-  hours = hours ? hours : 12; // the hour '0' should be '12'
+  hours = hours ? hours : 12;
   minutes = minutes < 10 ? '0' + minutes : minutes;
 
   var timeString = hours + ':' + minutes + ' ' + ampm;
@@ -89,7 +94,3 @@ function updateWeather() {
       console.error('Error fetching weather data:', error);
     });
 }
-
-// Update widgets
-updateClock();
-updateWeather();
