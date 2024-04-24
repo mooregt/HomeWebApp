@@ -28,6 +28,54 @@ async function connectToMongo(dbName, collectionName) {
   return client.db(dbName).collection(collectionName);
 }
 
+async function fetchAndStoreTemperature() {
+  const currentHour = new Date().getHours();
+  
+  // Check if the current time is within daytime hours
+  if (currentHour >= DAY_START_HOUR && currentHour < DAY_END_HOUR) {
+    const url = "https://api.open-meteo.com/v1/forecast?latitude=54.2242&longitude=-4.5357&hourly=temperature_2m&timezone=Europe%2FLondon&forecast_days=1";
+    var currentDate = new Date();
+
+    try {
+      const response = await axios.get(url);
+      var lowestTemp = 100;
+      var highestTemp = 0;
+      var avgTemp = 0;
+      var countTemp = 0;
+
+      // Remove the first 6 and last 6 elements
+      var daylightTemps = response.data.hourly.temperature_2m.splice(6, response.data.hourly.temperature_2m.length);
+      daylightTemps = daylightTemps.splice(0, daylightTemps.length - 6);
+
+      daylightTemps.forEach(temp => {
+        if (temp < lowestTemp){
+          lowestTemp = temp;
+        }
+        if (temp > highestTemp){
+          highestTemp = temp;
+        }
+        avgTemp = avgTemp + temp;
+        countTemp++;
+      });
+      avgTemp = avgTemp / countTemp;
+
+      console.log(lowestTemp);
+      console.log(highestTemp);
+      console.log(avgTemp);
+
+      temperatureCollection.insertOne({
+        minTemp: lowestTemp,
+        maxTemp: highestTemp,
+        avgTemp: avgTemp,
+        datetime: currentDate
+      });
+
+    } catch (error) {
+      console.error('Error fetching weather data:', error);
+    }
+  }
+}
+
 async function fetchAndStoreWeather() {
   const currentHour = new Date().getHours();
 
@@ -69,6 +117,10 @@ async function fetchAndStoreWeather() {
 
 async function getWeatherLatest() {
   return await weatherCollection.findOne({}, {sort: {pubDate: -1}});
+}
+
+async function getTemperatureLatest() {
+  return await temperatureCollection.findOne({}, {sort: {datetime: -1}});
 }
 
 /**
@@ -115,18 +167,17 @@ app.get('/getItems', async (req, res) => {
  */
 app.post('/saveItem', async (req, res) => {
   const type = req.query.type;
-  const { item, item2, item3, item4 } = req.body;
 
   try {
     switch (type) {
       case "shoppingList":
-        await shoppingListCollection.insertOne({ name: item });
+        await shoppingListCollection.insertOne({ name: req.body.item });
         break;
       case "mealPlan":
-        await mealPlanCollection.insertOne({ name: item, weekday: item2 });
+        await mealPlanCollection.insertOne({ name: req.body.item, weekday: req.body.weekday });
         break;
       case "chores":
-        await choresCollection.insertOne({ name: item, person: item2, lastCompleted: item3, frequency: item4 });
+        await choresCollection.insertOne({ name: req.body.item, person: req.body.person, lastCompleted: req.body.lastCompleted, frequency: req.body.frequency });
         break;
     }
 
@@ -144,18 +195,17 @@ app.post('/saveItem', async (req, res) => {
  */
 app.post('/removeItem', async (req, res) => {
   const type = req.query.type;
-  const { item } = req.body;
 
   try {
     switch (type) {
       case "shoppingList":
-        await shoppingListCollection.deleteOne({ name: item });
+        await shoppingListCollection.deleteOne({ name: req.body.item });
         break;
       case "mealPlan":
-        await mealPlanCollection.deleteOne({ weekday: item });
+        await mealPlanCollection.deleteOne({ weekday: req.body.weekday });
         break;
       case "chores":
-        await choresCollection.deleteOne({ name: item });
+        await choresCollection.deleteOne({ name: req.body.item });
         break;
     }
 
@@ -180,7 +230,24 @@ app.get('/getWeather', async (req, res) => {
   }
 });
 
-setInterval(fetchAndStoreWeather, TWO_HOURS);
+app.get('/getTemperature', async (req, res) => {
+  try {
+    var item;
+
+    item = await getTemperatureLatest();
+    
+    res.json(item);
+  }
+  catch (error) {
+    console.error('Error reading items from MongoDB:', error);
+    res.status(500).send('Internal Server Error');
+  }
+});
+
+setInterval(function () {
+  fetchAndStoreWeather();
+  fetchAndStoreTemperature();
+}, TWO_HOURS);
 
 /**
  * Start up the server on the specified port.
@@ -190,6 +257,7 @@ app.listen(port, '0.0.0.0', async () => {
     mealPlanCollection = await connectToMongo('mealPlan', 'items');
     choresCollection = await connectToMongo('chores', 'items');
     weatherCollection = await connectToMongo('weather', 'items');
+    temperatureCollection = await connectToMongo('temperature', 'items');
     
     console.log(`Server is running at http://${require('os').hostname()}:${port}`);
 });

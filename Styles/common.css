@@ -1,13 +1,144 @@
+/* Reset some default styles */
+body {
+  font-family: 'Arial', sans-serif;
+  background-color: #f4f4f4;
+  margin: 20px;
+}
+
+/* Heading styles */
+h2 {
+  color: #333;
+}
+
+/* Text input styles */
+input[type="text"] {
+  padding: 8px;
+  font-size: 16px;
+}
+
+/* Select styles */
+select {
+  padding: 8px;
+  font-size: 16px;
+}
+
+/* Button styles */
+button {
+  padding: 8px 12px;
+  font-size: 16px;
+  cursor: pointer;
+  background-color: #4CAF50;
+  color: #fff;
+  border: none;
+  border-radius: 3px;
+}
+
+button:hover {
+  background-color: #45a049;
+}
+
+/* Unordered list styles */
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+/* List item styles */
+li {
+  background-color: #fff;
+  padding: 10px;
+  margin-bottom: 5px;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Remove button styles */
+button#removeButton {
+  margin-right: 5px;
+  height: 34px;
+  background-color: #da3232;
+}
+
+/* Remove button styles */
+button#removeButton:hover {
+  margin-right: 5px;
+  height: 34px;
+  background-color: #c53232;
+}
+
+/* Remove button styles */
+button#removeButton:disabled {
+  background-color: #dcdcdc;
+}
+
+/* Complete button styles */
+button#completeButton {
+  margin-right: 5px;
+  height: 34px;
+}
+
+/* Disabled button styles */
+button:disabled {
+  background-color: #dcdcdc;
+  color: #a0a0a0;
+  cursor: not-allowed;
+}
+
+#itemInput {
+  width:280px;
+}
 
 /**
  * Right-hand side widget styles
  */
-#clock, #weatherInfo {
+#clock, #weatherInfo, #tempLow, #tempHigh, #tempAvg {
   background-color: #fff;
   padding: 10px;
   margin-bottom: 18px;
   border-radius: 5px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+#tempLow, #tempHigh, #tempAvg {
+  width: 30%;
+  height: 15vh;
+}
+
+.center {
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  margin: 0;
+  padding: 0;
+}
+
+#tempLow, #tempHigh {
+  margin-right: 5%;
+}
+
+.temp {
+  margin: 0px;
+  font-size: 36px;
+  display: flex;
+  text-align: center;
+  justify-content: center;
+}
+
+.tempHeader {
+  margin-top: 0px;
+  color: #333;
+  font-size: 20px;
+  font-weight: bold;
+  display: flex;
+  text-align: center;
+  justify-content: center;
+}
+
+#tempContainer {
+  display: flex;
 }
 
 #weatherHeader {
@@ -20,7 +151,7 @@
   color: #333; /* Match the heading color */
 }
 
-#date, #weatherUpdated {
+#date, #weatherUpdated, #tempLow, #tempHigh, #tempAvg {
   font-size: 1.2em;
   color: #2f83bf; /* You can adjust the color based on your preference */
 }

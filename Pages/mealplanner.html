@@ -4,17 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Meal Planner</title>
-    <link rel="stylesheet" href="../Styles/index.css">
-    <link rel="stylesheet" href="../Styles/mealplan.css">
     <link rel="stylesheet" href="../Styles/common.css">
+    <link rel="stylesheet" href="../Styles/mealplanner.css">
     <link rel="stylesheet" href="../node_modules/@fortawesome/fontawesome-free/css/all.css">
 </head>
 <body>
 
 <div id="navbar">
-  <a href="../index.html">Shopping List</a>
+  <a href="../Pages/shoppinglist.html">Shopping List</a>
   <a href="../Pages/mealplanner.html">Meal Planner</a>
-  <a href="../Pages/chores.html">Chores</a>
+  <a href="../Pages/chorelist.html">Chore List</a>
 </div>
     <h2>Meal Planner</h2>
 
@@ -86,11 +85,17 @@
         </div>
     
         <div id="weatherInfo"></div>
+
+        <div id="tempContainer">
+          <div id="tempLow"></div>
+          <div id="tempHigh"></div>
+          <div id="tempAvg"></div>
+      </div>
       </div>
 
-    <script src="../Scripts/mealplan.service.js"></script>
-    <script src="../Scripts/common.components.js"></script>
-    <script src="../Scripts/server.repository.js"></script>
-    <script src="../Scripts/cache.repository.js"></script>
+    <script src="../Scripts/MealPlanner.js"></script>
+    <script src="../Scripts/CommonUtilities.js"></script>
+    <script src="../Scripts/ServerUtilities.js"></script>
+    <script src="../Scripts/CacheUtilities.js"></script>
 </body>
 </html>
