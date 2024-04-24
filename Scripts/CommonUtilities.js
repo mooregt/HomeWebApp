@@ -3,6 +3,7 @@ const ONE_HOUR = 60 * 60 * 1000;
 document.addEventListener('DOMContentLoaded', function () {
   updateClock();
   updateWeather();
+  updateTemperature();
 });
 
 /**
@@ -89,6 +90,23 @@ function updateWeather() {
         <p>${forecastOutlook}</p>
         <p id="weatherUpdated">Updated: ${data.forecastPubDate}</p>
       `;
+    })
+    .catch(error => {
+      console.error('Error fetching weather data:', error);
+    });
+}
+
+function updateTemperature() {
+  const tempLow = document.getElementById('tempLow');
+  const tempHigh = document.getElementById('tempHigh');
+  const tempAvg = document.getElementById('tempAvg');
+
+  fetch('/getTemperature')
+    .then(response => response.json())
+    .then(data => {
+      tempLow.innerHTML = `<p class="tempHeader">MIN °C</p><p class="temp">${data.minTemp.toFixed(1)}</p>`;
+      tempHigh.innerHTML = `<p class="tempHeader">MAX °C</p><p  class="temp">${data.maxTemp.toFixed(1)}</p>`;
+      tempAvg.innerHTML = `<p class="tempHeader">AVG °C</p><p class="temp">${data.avgTemp.toFixed(1)}</p>`;
     })
     .catch(error => {
       console.error('Error fetching weather data:', error);

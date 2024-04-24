@@ -107,8 +107,34 @@ button:disabled {
   height: 15vh;
 }
 
+.center {
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  margin: 0;
+  padding: 0;
+}
+
 #tempLow, #tempHigh {
   margin-right: 5%;
+}
+
+.temp {
+  margin: 0px;
+  font-size: 36px;
+  display: flex;
+  text-align: center;
+  justify-content: center;
+}
+
+.tempHeader {
+  margin-top: 0px;
+  color: #333;
+  font-size: 20px;
+  font-weight: bold;
+  display: flex;
+  text-align: center;
+  justify-content: center;
 }
 
 #tempContainer {
