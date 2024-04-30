@@ -191,14 +191,16 @@ button:disabled {
   }
 
   a {
-    font-size: 3vw;
+    font-size: 3.2vw;
   }
   
   /* Navbar styles */
   #navbar {
+    display: flex;
     background-color: #aaa;
     overflow: hidden;
     border-radius: 25px;
+    justify-content: center;
   }
 
   /* Navbar link styles */
@@ -211,6 +213,7 @@ button:disabled {
     text-decoration: none;
     font-weight: bold;
     border-radius: 25px;
+    margin-right: 1vw;
   }
 
   #navbar a:hover {
