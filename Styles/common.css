@@ -189,6 +189,10 @@ button:disabled {
   #widgetsRight {
     display: none;
   }
+
+  a {
+    font-size: 3vw;
+  }
   
   /* Navbar styles */
   #navbar {

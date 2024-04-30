@@ -5,17 +5,22 @@
 }
 
 .indexMenuItem {
-    margin-bottom: 3vh;
+    margin-bottom: 5vh;
+}
+
+.indexMenuItem > a {
+    display: inline-block;
+    text-decoration: none;
+    font-weight: bold;
+    color: white;
+    padding: 2vh 3vw;
     width: 50vw;
     background-color: #aaa;
-    padding: 2vh;
     border-radius: 25px;
     box-shadow: 0 4px 8px rgba(0,0,0,0.1)
 }
 
-.indexMenuItem > a {
-    text-decoration: none;
-    font-weight: bold;
-    color: white;
-    padding: 2vh 25vw 2vh 0vw;
+.indexMenuItem > a:hover {
+    background-color: #e3e3e3;
+    color: black;
 }
