@@ -94,7 +94,7 @@ button:disabled {
 /**
  * Right-hand side widget styles
  */
-#clock, #weatherInfo, #tempLow, #tempHigh, #tempAvg {
+#clock, #weatherInfo, #tempToday, #tempTomorrow, #tempWeekend {
   background-color: #fff;
   padding: 10px;
   margin-bottom: 18px;
@@ -102,7 +102,7 @@ button:disabled {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-#tempLow, #tempHigh, #tempAvg {
+#tempToday, #tempTomorrow, #tempWeekend {
   width: 30%;
   height: 15vh;
 }
@@ -115,7 +115,7 @@ button:disabled {
   padding: 0;
 }
 
-#tempLow, #tempHigh {
+#tempToday, #tempTomorrow {
   margin-right: 5%;
 }
 
@@ -151,9 +151,19 @@ button:disabled {
   color: #333; /* Match the heading color */
 }
 
-#date, #weatherUpdated, #tempLow, #tempHigh, #tempAvg {
+#date, #weatherUpdated{
   font-size: 1.2em;
   color: #2f83bf; /* You can adjust the color based on your preference */
+}
+
+#tempTodayMax > .temp, #tempTomorrowMax > .temp, #tempWeekendMax > .temp {
+  font-size: 2em;
+  color: #2f83bf; /* You can adjust the color based on your preference */
+}
+
+#tempTodayMin > .temp, #tempTomorrowMin > .temp, #tempWeekendMin > .temp {
+  font-size: 1.2em;
+  color: #333; /* You can adjust the color based on your preference */
 }
 
 /* Media query for landscape mode */

@@ -33,43 +33,45 @@ async function fetchAndStoreTemperature() {
   
   // Check if the current time is within daytime hours
   if (currentHour >= DAY_START_HOUR && currentHour < DAY_END_HOUR) {
-    const url = "https://api.open-meteo.com/v1/forecast?latitude=54.2242&longitude=-4.5357&hourly=temperature_2m&timezone=Europe%2FLondon&forecast_days=1";
+    const url = "https://www.gov.im/weather/5-day-forecast/Rss5DayForecast";
     var currentDate = new Date();
+    var day = currentDate.getDay();
 
     try {
       const response = await axios.get(url);
-      var lowestTemp = 100;
-      var highestTemp = 0;
-      var avgTemp = 0;
-      var countTemp = 0;
+      const xmlData = response.data;
 
-      // Remove the first 6 and last 6 elements
-      var daylightTemps = response.data.hourly.temperature_2m.splice(6, response.data.hourly.temperature_2m.length);
-      daylightTemps = daylightTemps.splice(0, daylightTemps.length - 6);
+      const parser = new xml2js.Parser();
+      const parsedData = await parser.parseStringPromise(xmlData);
 
-      daylightTemps.forEach(temp => {
-        if (temp < lowestTemp){
-          lowestTemp = temp;
-        }
-        if (temp > highestTemp){
-          highestTemp = temp;
-        }
-        avgTemp = avgTemp + temp;
-        countTemp++;
-      });
-      avgTemp = avgTemp / countTemp;
+      const text = parsedData.rss.channel[0].item[0].description[0];
+      const regex = /Temperature Min\. air temperature (\d+)&deg;C and max\. air temperature (\d+)&deg;C/g;
 
-      console.log(lowestTemp);
-      console.log(highestTemp);
-      console.log(avgTemp);
+      let match;
+      var tempArray = [];
+      while ((match = regex.exec(text)) !== null) {
+          const minTemp = match[1];
+          const maxTemp = match[2];
+
+          var tempData = {
+            day: day,
+            min: minTemp,
+            max: maxTemp
+          }
+
+          tempArray.push(tempData);
+          if (day < 7){
+            day++;
+          }
+          else {
+            day = 1;
+          }
+      }
 
       temperatureCollection.insertOne({
-        minTemp: lowestTemp,
-        maxTemp: highestTemp,
-        avgTemp: avgTemp,
-        datetime: currentDate
+        datetime: currentDate,
+        temperature: tempArray
       });
-
     } catch (error) {
       console.error('Error fetching weather data:', error);
     }
