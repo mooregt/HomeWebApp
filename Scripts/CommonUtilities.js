@@ -97,16 +97,41 @@ function updateWeather() {
 }
 
 function updateTemperature() {
-  const tempLow = document.getElementById('tempLow');
-  const tempHigh = document.getElementById('tempHigh');
-  const tempAvg = document.getElementById('tempAvg');
+  const tempTodayMax = document.getElementById('tempTodayMax');
+  const tempTodayMin = document.getElementById('tempTodayMin');
+  const tempTomorrowMax = document.getElementById('tempTomorrowMax');
+  const tempTomorrowMin = document.getElementById('tempTomorrowMin');
+  const tempWeekendMax = document.getElementById('tempWeekendMax');
+  const tempWeekendMin = document.getElementById('tempWeekendMin');
 
   fetch('/getTemperature')
     .then(response => response.json())
     .then(data => {
-      tempLow.innerHTML = `<p class="tempHeader">MIN °C</p><p class="temp">${data.minTemp.toFixed(1)}</p>`;
-      tempHigh.innerHTML = `<p class="tempHeader">MAX °C</p><p  class="temp">${data.maxTemp.toFixed(1)}</p>`;
-      tempAvg.innerHTML = `<p class="tempHeader">AVG °C</p><p class="temp">${data.avgTemp.toFixed(1)}</p>`;
+      tempTodayMax.innerHTML = `<p class="tempHeader">TODAY</p><p class="temp">${data.temperature[0].max}°</p>`;
+      tempTodayMin.innerHTML = `<p class="temp">${data.temperature[0].min}°</p>`;
+      tempTomorrowMax.innerHTML = `<p class="tempHeader">TOMORROW</p><p  class="temp">${data.temperature[1].max}°</p>`;
+      tempTomorrowMin.innerHTML = `<p class="temp">${data.temperature[1].min}°</p>`;
+
+      if (data.temperature[0].day >= 1 && data.temperature[0].day < 3){ // if Monday or Tuesday
+        tempWeekendMax.innerHTML = `<p class="tempHeader">WEEKEND</p><p class="temp">${data.temperature[4].max}°</p>`;
+        tempWeekendMin.innerHTML = `<p class="temp">${data.temperature[4].min}°</p>`;
+      }
+      else if (data.temperature[0].day == 3) { // if Wednesday
+        tempWeekendMax.innerHTML = `<p class="tempHeader">WEEKEND</p><p class="temp">${data.temperature[3].max}°</p>`;
+        tempWeekendMin.innerHTML = `<p class="temp">${data.temperature[3].min}°</p>`;
+      }
+      else if (data.temperature[0].day == 4) { // if Thursday
+        tempWeekendMax.innerHTML = `<p class="tempHeader">WEEKEND</p><p class="temp">${data.temperature[2].max}°</p>`;
+        tempWeekendMin.innerHTML = `<p class="temp">${data.temperature[2].min}°</p>`;
+      }
+      else if (data.temperature[0].day == 5) { // if Friday
+        tempWeekendMax.innerHTML = `<p class="tempHeader">WEEKEND</p><p class="temp">${data.temperature[1].max}°</p>`;
+        tempWeekendMin.innerHTML = `<p class="temp">${data.temperature[1].min}°</p>`;
+      }
+      else if (data.temperature[0].day >= 6) { // if Saturday or Sunday
+        tempWeekendMax.innerHTML = `<p class="tempHeader">WEEKEND</p><p class="temp">${data.temperature[0].max}°</p>`;
+        tempWeekendMin.innerHTML = `<p class="temp">${data.temperature[0].min}°</p>`;
+      }
     })
     .catch(error => {
       console.error('Error fetching weather data:', error);
