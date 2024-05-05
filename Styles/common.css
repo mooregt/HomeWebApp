@@ -103,7 +103,7 @@ button:disabled {
 }
 
 #tempToday, #tempTomorrow, #tempWeekend {
-  width: 30%;
+  width: 7vw;
   height: 15vh;
 }
 
@@ -130,7 +130,7 @@ button:disabled {
 .tempHeader {
   margin-top: 0px;
   color: #333;
-  font-size: 20px;
+  font-size: 1.2vw;
   font-weight: bold;
   display: flex;
   text-align: center;
