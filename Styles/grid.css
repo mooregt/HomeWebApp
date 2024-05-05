@@ -40,8 +40,8 @@
 @media screen and (min-width: 768px) { /* Landscape */
     #gridHeader {
         display: block;
-        width: 98vw;
-        padding: 1vw;
+        width: 96vw;
+        padding: 2vw;
     }
 
     #gridNav {
@@ -50,17 +50,13 @@
     }
     
     #gridContent {
-        width: 58vw;
-        padding: 1vw;
-    }
-
-    #gridNav {
-        width: 0vw;
+        width: 56vw;
+        padding: 2vw;
     }
 
     #gridWidgets {
-        width: 38vw;
-        padding: 1vw;
+        width: 36vw;
+        padding: 2vw;
     }
 
     #gridInput {
@@ -76,17 +72,13 @@
     }
 
     #gridNav {
-        width: 100vw;
-        padding: 1vw;
+        width: 96vw;
+        padding: 2vw;
     }
     
     #gridContent {
-        width: 100vw;
-        padding: 1vw;
-    }
-
-    #gridNav {
-        width: 100vw;
+        width: 96vw;
+        padding: 2vw;
     }
 
     #gridWidgets {
@@ -95,6 +87,6 @@
     }
 
     #gridInput {
-        padding: 1vw;
+        padding: 2vw;
     }
 }
