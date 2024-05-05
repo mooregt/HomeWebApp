@@ -88,7 +88,7 @@ function updateWeather() {
         <p>${forecastToday}</p>
         <h2 id="weatherHeader">Tomorrow</h2>
         <p>${forecastOutlook}</p>
-        <p id="weatherUpdated">Updated: ${data.forecastPubDate}</p>
+        <p id="weatherUpdated">${data.forecastPubDate}</p>
       `;
     })
     .catch(error => {
@@ -120,17 +120,17 @@ function updateTemperature() {
         tempWeekendMax.innerHTML = `<p class="tempHeader">WEEKEND</p><p class="temp">${data.temperature[3].max}°</p>`;
         tempWeekendMin.innerHTML = `<p class="temp">${data.temperature[3].min}°</p>`;
       }
-      else if (data.temperature[0].day == 4) { // if Thursday
+      else if (data.temperature[0].day == 4 || data.temperature[0].day == 5) { // if Thursday or Friday
         tempWeekendMax.innerHTML = `<p class="tempHeader">WEEKEND</p><p class="temp">${data.temperature[2].max}°</p>`;
         tempWeekendMin.innerHTML = `<p class="temp">${data.temperature[2].min}°</p>`;
       }
-      else if (data.temperature[0].day == 5) { // if Friday
-        tempWeekendMax.innerHTML = `<p class="tempHeader">WEEKEND</p><p class="temp">${data.temperature[1].max}°</p>`;
-        tempWeekendMin.innerHTML = `<p class="temp">${data.temperature[1].min}°</p>`;
+      else if (data.temperature[0].day == 6) { // if Saturday
+        tempWeekendMax.innerHTML = `<p class="tempHeader">MONDAY</p><p class="temp">${data.temperature[2].max}°</p>`;
+        tempWeekendMin.innerHTML = `<p class="temp">${data.temperature[2].min}°</p>`;
       }
-      else if (data.temperature[0].day >= 6) { // if Saturday or Sunday
-        tempWeekendMax.innerHTML = `<p class="tempHeader">WEEKEND</p><p class="temp">${data.temperature[0].max}°</p>`;
-        tempWeekendMin.innerHTML = `<p class="temp">${data.temperature[0].min}°</p>`;
+      else if (data.temperature[0].day == 0) { // if Sunday
+        tempWeekendMax.innerHTML = `<p class="tempHeader">MONDAY</p><p class="temp">${data.temperature[1].max}°</p>`;
+        tempWeekendMin.innerHTML = `<p class="temp">${data.temperature[1].min}°</p>`;
       }
     })
     .catch(error => {
