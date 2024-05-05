@@ -37,10 +37,11 @@
     grid-column-end: 3;
 }
 
-@media screen and (min-width: 768px) {
+@media screen and (min-width: 768px) { /* Landscape */
     #gridHeader {
-        width: 98vw;
-        padding: 1vw;
+        display: block;
+        width: 96vw;
+        padding: 2vw;
     }
 
     #gridNav {
@@ -49,17 +50,13 @@
     }
     
     #gridContent {
-        width: 58vw;
-        padding: 1vw;
-    }
-
-    #gridNav {
-        width: 0vw;
+        width: 56vw;
+        padding: 2vw;
     }
 
     #gridWidgets {
-        width: 38vw;
-        padding: 1vw;
+        width: 36vw;
+        padding: 2vw;
     }
 
     #gridInput {
@@ -67,24 +64,21 @@
     }
 }
 
-@media screen and (max-width: 767px) {
+@media screen and (max-width: 767px) { /* Portrait */
     #gridHeader {
-        width: 100vw;
-        padding: 1vw;
+        display: none;
+        width: 0vw;
+        padding: 0;
     }
 
     #gridNav {
-        width: 100vw;
-        padding: 1vw;
+        width: 96vw;
+        padding: 2vw;
     }
     
     #gridContent {
-        width: 100vw;
-        padding: 1vw;
-    }
-
-    #gridNav {
-        width: 100vw;
+        width: 96vw;
+        padding: 2vw;
     }
 
     #gridWidgets {
@@ -93,6 +87,6 @@
     }
 
     #gridInput {
-        padding: 1vw;
+        padding: 2vw;
     }
 }
