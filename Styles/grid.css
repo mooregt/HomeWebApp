@@ -2,30 +2,97 @@
     display: grid;
 }
 
-#gridHeader {
-    width: 100vw;
+#gridNav {
     grid-row-start: 1;
     grid-row-end: 2;
+    grid-column-start: 1;
+    grid-column-end: 2;
+}
+
+#gridHeader {
+    grid-row-start: 2;
+    grid-row-end: 3;
     grid-column-start: 1;
     grid-column-end: 3;
 }
 
-#gridContent {
-    width: 58vw;
-    padding: 1vw;
+#gridInput {
+    grid-row-start: 3;
+    grid-row-end: 4;
+    grid-column-start: 1;
+    grid-column-end: 2;
+}
 
-    grid-row-start: 2;
-    grid-row-end: 3;
+#gridContent {
+    grid-row-start: 4;
+    grid-row-end: 5;
     grid-column-start: 1;
     grid-column-end: 2;
 }
 
 #gridWidgets {
-    width: 38vw;
-    padding: 1vw;
-    
-    grid-row-start: 2;
-    grid-row-end: 3;
+    grid-row-start: 4;
+    grid-row-end: 5;
     grid-column-start: 2;
     grid-column-end: 3;
+}
+
+@media screen and (min-width: 768px) {
+    #gridHeader {
+        width: 100vw;
+        padding: 1vw;
+    }
+
+    #gridNav {
+        width: 0vw;
+        padding: 0;
+    }
+    
+    #gridContent {
+        width: 58vw;
+        padding: 1vw;
+    }
+
+    #gridNav {
+        width: 0vw;
+    }
+
+    #gridWidgets {
+        width: 38vw;
+        padding: 1vw;
+    }
+
+    #gridInput {
+        padding: 0;
+    }
+}
+
+@media screen and (max-width: 767px) {
+    #gridHeader {
+        width: 100vw;
+        padding: 1vw;
+    }
+
+    #gridNav {
+        width: 100vw;
+        padding: 1vw;
+    }
+    
+    #gridContent {
+        width: 100vw;
+        padding: 1vw;
+    }
+
+    #gridNav {
+        width: 100vw;
+    }
+
+    #gridWidgets {
+        width: 0vw;
+        padding: 0;
+    }
+
+    #gridInput {
+        padding: 1vw;
+    }
 }

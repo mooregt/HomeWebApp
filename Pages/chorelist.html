@@ -12,39 +12,43 @@
 <body>
 
     <div id="gridContainer">
-        <div id="navbar">
-            <a href="../Pages/shoppinglist.html">Shopping List</a>
-            <a href="../Pages/mealplanner.html">Meal Planner</a>
-            <a href="../Pages/chorelist.html">Chore List</a>
+        <div id="gridNav">
+            <div id="navbar">
+                <a href="../Pages/shoppinglist.html">Shopping List</a>
+                <a href="../Pages/mealplanner.html">Meal Planner</a>
+                <a href="../Pages/chorelist.html">Chore List</a>
+            </div>
         </div>
 
         <div id="gridHeader">
             <h2>Chores</h2>
         </div>
 
-        <div id="inputField">
-            <form>
-                <select class="choreSelector" id="person" name="person">
-                    <option value="" disabled selected hidden>Assigned to</option>
-                    <option value="Laura">Laura</option>
-                    <option value="George">George</option>
-                    <option value="Both">Both</option>
-                </select>
+        <div id="gridInput">
+            <div id="inputField">
+                <form>
+                    <select class="choreSelector" id="person" name="person">
+                        <option value="" disabled selected hidden>Assigned to</option>
+                        <option value="Laura">Laura</option>
+                        <option value="George">George</option>
+                        <option value="Both">Both</option>
+                    </select>
 
-                <select class="choreSelector" id="frequency" name="frequency">
-                    <option value="" disabled selected hidden>Frequency</option>
-                    <option value=36500>Once</option>
-                    <option value=1>Daily</option>
-                    <option value=7>Weekly</option>
-                    <option value=14>Fortnightly</option>
-                    <option value=30>Monthly</option>
-                    <option value=365>Yearly</option>
-                </select>
+                    <select class="choreSelector" id="frequency" name="frequency">
+                        <option value="" disabled selected hidden>Frequency</option>
+                        <option value=36500>Once</option>
+                        <option value=1>Daily</option>
+                        <option value=7>Weekly</option>
+                        <option value=14>Fortnightly</option>
+                        <option value=30>Monthly</option>
+                        <option value=365>Yearly</option>
+                    </select>
 
-                <input type="text" id="choreInput" name="chore" placeholder="Enter chore">
+                    <input type="text" id="choreInput" name="chore" placeholder="Enter chore">
 
-                <button type="button" class="fa-solid fa-plus" onclick="addItem()"></button>
-            </form>
+                    <button type="button" class="fa-solid fa-plus" onclick="addItem()"></button>
+                </form>
+            </div>
         </div>
 
         <div id="gridContent">
