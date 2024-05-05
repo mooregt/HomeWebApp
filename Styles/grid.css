@@ -11,7 +11,9 @@
 }
 
 #gridContent {
-    width: 60vw;
+    width: 58vw;
+    padding: 1vw;
+
     grid-row-start: 2;
     grid-row-end: 3;
     grid-column-start: 1;
@@ -19,7 +21,9 @@
 }
 
 #gridWidgets {
-    width: 40vw;
+    width: 38vw;
+    padding: 1vw;
+    
     grid-row-start: 2;
     grid-row-end: 3;
     grid-column-start: 2;

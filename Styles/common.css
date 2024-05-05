@@ -104,7 +104,7 @@ button:disabled {
 }
 
 #tempToday, #tempTomorrow, #tempWeekend {
-  width: 7vw;
+  width: 30%;
   height: 15vh;
 }
 
@@ -172,6 +172,7 @@ button:disabled {
   #itemList {
     float: left;
     width: 100%;
+    margin: 0;
   }
 
   #widgetsRight {
