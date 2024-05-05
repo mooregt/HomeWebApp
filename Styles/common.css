@@ -11,6 +11,13 @@ h2 {
   color: #333;
 }
 
+#heading {
+  padding: 1vw;
+  color: #333;
+  font-size: 2em;
+  font-weight: bold;
+}
+
 /* Text input styles */
 input[type="text"] {
   padding: 8px;
@@ -95,12 +102,23 @@ button:disabled {
 /**
  * Right-hand side widget styles
  */
-#clock, #weatherInfo, #tempToday, #tempTomorrow, #tempWeekend {
+#weatherInfo, #tempToday, #tempTomorrow, #tempWeekend, #headerBar {
   background-color: #fff;
   padding: 10px;
-  margin-bottom: 18px;
   border-radius: 5px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+#weatherInfo, #tempToday, #tempTomorrow, #tempWeekend {
+  margin-bottom: 18px;
+}
+
+#headerBar {
+  display: flex;
+}
+
+#clock {
+  margin-left: auto;
 }
 
 #tempToday, #tempTomorrow, #tempWeekend {
@@ -149,6 +167,7 @@ button:disabled {
 #time {
   font-size: 2em;
   font-weight: bold;
+  float: right;
   color: #333; /* Match the heading color */
 }
 
