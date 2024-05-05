@@ -2,7 +2,8 @@
 body {
   font-family: 'Arial', sans-serif;
   background-color: #f4f4f4;
-  margin: 20px;
+  margin: 0;
+  padding: 0;
 }
 
 /* Heading styles */
@@ -169,15 +170,12 @@ button:disabled {
 /* Media query for landscape mode */
 @media screen and (min-width: 768px) {
   #itemList {
-    width: 65%; /* Adjust the width based on your preference */
     float: left;
-    margin-top: 1%;
+    width: 100%;
   }
 
   #widgetsRight {
-    width: 30%; /* Adjust the width based on your preference */
     float: left;
-    margin: 1%;
   }
   
   #inputField {

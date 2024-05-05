@@ -4,38 +4,44 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Meal Planner</title>
+    <link rel="stylesheet" href="../Styles/grid.css">
     <link rel="stylesheet" href="../Styles/common.css">
     <link rel="stylesheet" href="../Styles/mealplanner.css">
     <link rel="stylesheet" href="../node_modules/@fortawesome/fontawesome-free/css/all.css">
 </head>
 <body>
 
-<div id="navbar">
-  <a href="../Pages/shoppinglist.html">Shopping List</a>
-  <a href="../Pages/mealplanner.html">Meal Planner</a>
-  <a href="../Pages/chorelist.html">Chore List</a>
-</div>
+<div id="gridContainer">
+  <div id="navbar">
+    <a href="../Pages/shoppinglist.html">Shopping List</a>
+    <a href="../Pages/mealplanner.html">Meal Planner</a>
+    <a href="../Pages/chorelist.html">Chore List</a>
+  </div>
+
+  <div id="gridHeader">
     <h2>Meal Planner</h2>
+  </div>
 
-    <div id="inputField">
-      <form>
-          <select class="mealSelector" id="day" name="day" required>
-              <option value="" disabled selected hidden>Day of the week</option>
-              <option value="monday">Monday</option>
-              <option value="tuesday">Tuesday</option>
-              <option value="wednesday">Wednesday</option>
-              <option value="thursday">Thursday</option>
-              <option value="friday">Friday</option>
-              <option value="saturday">Saturday</option>
-              <option value="sunday">Sunday</option>
-          </select><br>
+  <div id="inputField">
+    <form>
+        <select class="mealSelector" id="day" name="day" required>
+            <option value="" disabled selected hidden>Day of the week</option>
+            <option value="monday">Monday</option>
+            <option value="tuesday">Tuesday</option>
+            <option value="wednesday">Wednesday</option>
+            <option value="thursday">Thursday</option>
+            <option value="friday">Friday</option>
+            <option value="saturday">Saturday</option>
+            <option value="sunday">Sunday</option>
+        </select><br>
 
-          <input type="text" class="mealSelector" id="mealInput" name="meal" placeholder="Enter meal">
+        <input type="text" class="mealSelector" id="mealInput" name="meal" placeholder="Enter meal">
 
-          <button type="button" class="fa-solid fa-plus" onclick="addItem()"></button>
-      </form>
-    </div>
-    
+        <button type="button" class="fa-solid fa-plus" onclick="addItem()"></button>
+    </form>
+  </div>
+  
+  <div id="gridContent">
     <div id="itemList">
       <table id="mealPlanTable">
           <thead>
@@ -76,7 +82,9 @@
           </tbody>
         </table>
       </div>
+    </div>
 
+    <div id="gridWidgets">
       <div id="widgetsRight">
         <div id="clock">
             <span id="time"></span>
@@ -101,10 +109,12 @@
           </div>
         </div>
       </div>
+    </div>
 
-    <script src="../Scripts/MealPlanner.js"></script>
-    <script src="../Scripts/CommonUtilities.js"></script>
-    <script src="../Scripts/ServerUtilities.js"></script>
-    <script src="../Scripts/CacheUtilities.js"></script>
+  <script src="../Scripts/MealPlanner.js"></script>
+  <script src="../Scripts/CommonUtilities.js"></script>
+  <script src="../Scripts/ServerUtilities.js"></script>
+  <script src="../Scripts/CacheUtilities.js"></script>
+</div>
 </body>
 </html>
