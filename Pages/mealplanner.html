@@ -4,19 +4,34 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Meal Planner</title>
+    <link rel="stylesheet" href="../Styles/grid.css">
     <link rel="stylesheet" href="../Styles/common.css">
     <link rel="stylesheet" href="../Styles/mealplanner.css">
     <link rel="stylesheet" href="../node_modules/@fortawesome/fontawesome-free/css/all.css">
 </head>
 <body>
 
-<div id="navbar">
-  <a href="../Pages/shoppinglist.html">Shopping List</a>
-  <a href="../Pages/mealplanner.html">Meal Planner</a>
-  <a href="../Pages/chorelist.html">Chore List</a>
-</div>
-    <h2>Meal Planner</h2>
+<div id="gridContainer">
+  <div id="gridNav">
+    <div id="navbar">
+      <a href="../Pages/shoppinglist.html">Shopping List</a>
+      <a href="../Pages/mealplanner.html">Meal Planner</a>
+      <a href="../Pages/chorelist.html">Chore List</a>
+    </div>
+  </div>
 
+  <div id="gridHeader">
+    <div id="headerBar">
+        <div id="heading">Meal Planner</div>
+        <div id="clock">
+            <span id="time"></span>
+            <br>
+            <span id="date"></span>
+        </div>
+    </div>
+</div>
+
+  <div id="gridInput">
     <div id="inputField">
       <form>
           <select class="mealSelector" id="day" name="day" required>
@@ -35,7 +50,9 @@
           <button type="button" class="fa-solid fa-plus" onclick="addItem()"></button>
       </form>
     </div>
-    
+  </div>
+  
+  <div id="gridContent">
     <div id="itemList">
       <table id="mealPlanTable">
           <thead>
@@ -76,14 +93,10 @@
           </tbody>
         </table>
       </div>
+    </div>
 
+    <div id="gridWidgets">
       <div id="widgetsRight">
-        <div id="clock">
-            <span id="time"></span>
-            <br>
-            <span id="date"></span>
-        </div>
-    
         <div id="weatherInfo"></div>
 
         <div id="tempContainer">
@@ -101,10 +114,12 @@
           </div>
         </div>
       </div>
+    </div>
 
-    <script src="../Scripts/MealPlanner.js"></script>
-    <script src="../Scripts/CommonUtilities.js"></script>
-    <script src="../Scripts/ServerUtilities.js"></script>
-    <script src="../Scripts/CacheUtilities.js"></script>
+  <script src="../Scripts/MealPlanner.js"></script>
+  <script src="../Scripts/CommonUtilities.js"></script>
+  <script src="../Scripts/ServerUtilities.js"></script>
+  <script src="../Scripts/CacheUtilities.js"></script>
+</div>
 </body>
 </html>
