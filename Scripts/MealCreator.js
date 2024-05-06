@@ -50,7 +50,7 @@ async function loadFromDatabase(itemList)
         const itemName = item.name;
         var listItem = createListItem(itemName);
   
-        var removeButton = createCompleteButton(async function () {
+        var removeButton = createRemoveButton(async function () {
           PostItemToServer('/removeItem', type, { item: itemName });
           itemList.removeChild(listItem);
           dbItems = await GetItemsFromServer(type)

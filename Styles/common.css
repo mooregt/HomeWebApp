@@ -249,3 +249,24 @@ button:disabled {
     color: black;
   }
 }
+
+.navButton {
+  margin-bottom: 3.2vh;
+}
+
+.navButton > a {
+  display: inline-block;
+  text-decoration: none;
+  font-weight: bold;
+  color: white;
+  padding: 1.5vh 2vw;
+  width: 50vw;
+  background-color: #2f83bf;
+  border-radius: 25px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1)
+}
+
+.navButton > a:hover {
+  background-color: #216493;
+  color: black;
+}
