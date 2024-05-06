@@ -29,11 +29,13 @@
             <span id="date"></span>
         </div>
     </div>
-</div>
+  </div>
 
   <div id="gridInput">
-    <div id="inputField">
+    <div class="center" id="inputField">
       <form>
+          <div class="navButton"><a href="../Pages/mealcreator.html">Enter Meal Creator</a></div>
+
           <select class="mealSelector" id="day" name="day" required>
               <option value="" disabled selected hidden>Day of the week</option>
               <option value="monday">Monday</option>
@@ -45,10 +47,11 @@
               <option value="sunday">Sunday</option>
           </select><br>
 
-          <input type="text" class="mealSelector" id="mealInput" name="meal" placeholder="Enter meal">
-
-          <button type="button" class="fa-solid fa-plus" onclick="addItem()"></button>
+          <select class="mealSelector" id="mealInput" name="meal" required>
+            <option value="" disabled selected hidden>Meal options</option>
+          </select>
       </form>
+      <button type="button" id="mealButton" onclick="addItem()">Add meal <div class="fa-solid fa-plus"></div></button>
     </div>
   </div>
   
@@ -118,6 +121,7 @@
 
   <script src="../Scripts/MealPlanner.js"></script>
   <script src="../Scripts/CommonUtilities.js"></script>
+  <script src="../Scripts/TimeAndWeather.js"></script>
   <script src="../Scripts/ServerUtilities.js"></script>
   <script src="../Scripts/CacheUtilities.js"></script>
 </div>

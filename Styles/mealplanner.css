@@ -48,13 +48,3 @@
   justify-content: space-between;
   align-items: center;
 }
-
-.mealSelector {
-  width: 300px;
-  margin-bottom: 10px;
-  margin-right: 5px;
-}
-
-#mealInput {
-  width:280px;
-}

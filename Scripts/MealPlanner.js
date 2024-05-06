@@ -2,7 +2,27 @@ const type = 'mealPlan';
 
 document.addEventListener('DOMContentLoaded', function () {
   loadItems();
+  loadMealOptions();
 });
+
+async function loadMealOptions() {
+  var select = document.getElementById("mealInput");
+
+  try {
+    var dbItems = await GetItemsFromServer('mealCreator');
+    if (dbItems) {
+      dbItems.forEach(item => {
+        var opt = item.name;
+        var el = document.createElement("option");
+        el.textContent = opt;
+        el.value = opt;
+        select.appendChild(el);
+      });
+    }
+  } catch (error) {
+    console.error('Error loading items from the database:', error);
+  }
+}
 
 function addItem() {
   const meal = document.getElementById("mealInput").value;
@@ -16,7 +36,6 @@ function addItem() {
     PostItemToServer('/saveItem', type, { item: meal, weekday: formattedDay });
 
     loadItems();
-    meal = "";
   }
 }
 

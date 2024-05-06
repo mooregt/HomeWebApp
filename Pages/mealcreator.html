@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home Hub</title>
+    <link rel="stylesheet" href="../Styles/common.css">
+    <link rel="stylesheet" href="../Styles/grid.css">
+    <link rel="stylesheet" href="../Styles/index.css">
+    <link rel="stylesheet" href="../node_modules/@fortawesome/fontawesome-free/css/all.css">
+</head>
+<body>
+
+    <div id="gridContainer">
+        <div id="gridNav">
+            <div id="navbar">
+            <a href="../Pages/shoppinglist.html">Shopping List</a>
+            <a href="../Pages/mealplanner.html">Meal Planner</a>
+            <a href="../Pages/chorelist.html">Chore List</a>
+            </div>
+        </div>
+
+        <div id="gridInput">
+            <div class="center" id="inputField">
+                <form>
+                    <input type="text" class="mealCreator" id="mealName" placeholder="Name of meal"><br>
+                    <textarea class="mealCreator" id="mealIngredients" placeholder="Ingredients (e.g. item,quantity;item,quantity;)" rows="5"></textarea><br>
+                    <label>
+                        <input type="checkbox" class="mealCreator" id="mealRequiresDefrosting">
+                    Requires defrosting?</label>
+                </form>
+                <button type="button" id="mealButton" onclick="addItem()">Add meal <div class="fa-solid fa-plus"></div></button>
+            </div>
+        </div>
+
+        <div id="gridContent">
+            <ul id="itemList"></ul>
+        </div>
+    </div>
+
+    <script src="../Scripts/MealCreator.js"></script>
+    <script src="../Scripts/CommonUtilities.js"></script>
+    <script src="../Scripts/ServerUtilities.js"></script>
+    <script src="../Scripts/CacheUtilities.js"></script>
+</body>
+</html>
