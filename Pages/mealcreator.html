@@ -23,7 +23,7 @@
             <div id="inputField">
                 <form>
                     <input type="text" class="mealCreator" id="mealName" placeholder="Name of meal"><br>
-                    <textarea class="mealCreator" id="mealIngredients" placeholder="List of ingredients (separated by comma)" rows="5"></textarea><br>
+                    <textarea class="mealCreator" id="mealIngredients" placeholder="Ingredients (e.g. item,quantity;item,quantity;)" rows="5"></textarea><br>
                     <label>
                         <input type="checkbox" class="mealCreator" id="mealRequiresDefrosting">
                     Requires defrosting?</label><br>
@@ -32,7 +32,15 @@
                 </form>
             </div>
         </div>
+
+        <div id="gridContent">
+            <ul id="itemList"></ul>
+        </div>
     </div>
 
+    <script src="../Scripts/MealCreator.js"></script>
+    <script src="../Scripts/CommonUtilities.js"></script>
+    <script src="../Scripts/ServerUtilities.js"></script>
+    <script src="../Scripts/CacheUtilities.js"></script>
 </body>
 </html>

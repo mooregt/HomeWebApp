@@ -153,6 +153,9 @@ app.get('/getItems', async (req, res) => {
       case "chores":
         items = await choresCollection.find({}).toArray();
         break;
+      case "mealCreator":
+        items = await mealCreatorCollection.find({}).toArray();
+        break;
     }
     
     res.json(items);
@@ -181,6 +184,9 @@ app.post('/saveItem', async (req, res) => {
       case "chores":
         await choresCollection.insertOne({ name: req.body.item, person: req.body.person, lastCompleted: req.body.lastCompleted, frequency: req.body.frequency });
         break;
+      case "mealCreator":
+        await mealCreatorCollection.insertOne({ name: req.body.item, ingredients: req.body.ingredients, defrost: req.body.defrost });
+        break;
     }
 
     res.json({ success: true });
@@ -208,6 +214,9 @@ app.post('/removeItem', async (req, res) => {
         break;
       case "chores":
         await choresCollection.deleteOne({ name: req.body.item });
+        break;
+      case "mealCreator":
+        await mealCreatorCollection.deleteOne({ name: req.body.item });
         break;
     }
 
@@ -260,6 +269,7 @@ app.listen(port, '0.0.0.0', async () => {
     choresCollection = await connectToMongo('chores', 'items');
     weatherCollection = await connectToMongo('weather', 'items');
     temperatureCollection = await connectToMongo('temperature', 'items');
+    mealCreatorCollection = await connectToMongo('mealCreator', 'items');
     
     console.log(`Server is running at http://${require('os').hostname()}:${port}`);
 });
