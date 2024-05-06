@@ -43,7 +43,6 @@ async function loadFromDatabase(itemList)
 {
   try {
     var dbItems = await GetItemsFromServer(type);
-    console.log(dbItems);
     if (dbItems) {
       itemList.innerHTML = "";
       

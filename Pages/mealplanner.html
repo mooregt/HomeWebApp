@@ -45,7 +45,9 @@
               <option value="sunday">Sunday</option>
           </select><br>
 
-          <input type="text" class="mealSelector" id="mealInput" name="meal" placeholder="Enter meal">
+          <select class="mealSelector" id="mealInput" name="meal" required>
+            <option value="" disabled selected hidden>Meal options</option>
+          </select>
 
           <button type="button" class="fa-solid fa-plus" onclick="addItem()"></button>
       </form>
