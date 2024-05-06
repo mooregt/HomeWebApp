@@ -95,17 +95,21 @@ button:disabled {
   cursor: not-allowed;
 }
 
-#itemInput, #day, #mealInput, #mealButton {
+#itemInput, #mealName, #mealIngredients, #choreInput {
   width: 66vw;
   padding: 2vw;
 
   margin-bottom: 2vw;
 }
 
-#itemButton {
+#itemButton, #mealButton, #person, #frequency, #day, #mealInput {
   width: 70vw;
   padding: 2vw;
 
+  margin-bottom: 2vw;
+}
+
+#mealRequiresDefrosting {
   margin-bottom: 2vw;
 }
 
