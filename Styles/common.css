@@ -95,8 +95,18 @@ button:disabled {
   cursor: not-allowed;
 }
 
-#itemInput {
-  width:280px;
+#itemInput, #day, #mealInput, #mealButton {
+  width: 66vw;
+  padding: 2vw;
+
+  margin-bottom: 2vw;
+}
+
+#itemButton {
+  width: 70vw;
+  padding: 2vw;
+
+  margin-bottom: 2vw;
 }
 
 /**
@@ -127,7 +137,6 @@ button:disabled {
 }
 
 .center {
-  display: flex;
   text-align: center;
   justify-content: center;
   margin: 0;
@@ -260,13 +269,12 @@ button:disabled {
   font-weight: bold;
   color: white;
   padding: 1.5vh 2vw;
-  width: 50vw;
-  background-color: #2f83bf;
+  width: 71vw;
+  background-color: #7d7d7d;
   border-radius: 25px;
   box-shadow: 0 4px 8px rgba(0,0,0,0.1)
 }
 
 .navButton > a:hover {
-  background-color: #216493;
-  color: black;
+  background-color: #aaa;
 }
