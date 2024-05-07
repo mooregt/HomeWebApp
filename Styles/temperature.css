@@ -1,0 +1,45 @@
+#tempToday, #tempTomorrow, #tempWeekend {
+  width: 30%;
+  height: 15vh;
+  background-color: #fff;
+  padding: 10px;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-bottom: 18px;
+}
+
+#tempToday, #tempTomorrow {
+  margin-right: 5%;
+}
+  
+.temp {
+  margin: 0px;
+  font-size: 36px;
+  display: flex;
+  text-align: center;
+  justify-content: center;
+}
+  
+.tempHeader {
+  margin-top: 0px;
+  color: #333;
+  font-size: 1.2vw;
+  font-weight: bold;
+  display: flex;
+  text-align: center;
+  justify-content: center;
+}
+  
+#tempContainer {
+  display: flex;
+}
+
+#tempTodayMax > .temp, #tempTomorrowMax > .temp, #tempWeekendMax > .temp {
+  font-size: 2em;
+  color: #2f83bf;
+}
+  
+#tempTodayMin > .temp, #tempTomorrowMin > .temp, #tempWeekendMin > .temp {
+  font-size: 1.2em;
+  color: #333;
+}
