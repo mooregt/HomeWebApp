@@ -30,21 +30,6 @@ select {
   font-size: 16px;
 }
 
-/* Button styles */
-button {
-  padding: 8px 12px;
-  font-size: 16px;
-  cursor: pointer;
-  background-color: #4CAF50;
-  color: #fff;
-  border: none;
-  border-radius: 3px;
-}
-
-button:hover {
-  background-color: #45a049;
-}
-
 /* Unordered list styles */
 ul {
   list-style-type: none;
@@ -63,38 +48,6 @@ li {
   align-items: center;
 }
 
-/* Remove button styles */
-button#removeButton {
-  margin-right: 5px;
-  height: 34px;
-  background-color: #da3232;
-}
-
-/* Remove button styles */
-button#removeButton:hover {
-  margin-right: 5px;
-  height: 34px;
-  background-color: #c53232;
-}
-
-/* Remove button styles */
-button#removeButton:disabled {
-  background-color: #dcdcdc;
-}
-
-/* Complete button styles */
-button#completeButton {
-  margin-right: 5px;
-  height: 34px;
-}
-
-/* Disabled button styles */
-button:disabled {
-  background-color: #dcdcdc;
-  color: #a0a0a0;
-  cursor: not-allowed;
-}
-
 #itemInput, #mealName, #mealIngredients, #choreInput {
   width: 66vw;
   padding: 2vw;
@@ -102,7 +55,7 @@ button:disabled {
   margin-bottom: 2vw;
 }
 
-#itemButton, #mealButton, #person, #frequency, #day, #mealInput {
+#person, #frequency, #day, #mealInput {
   width: 70vw;
   padding: 2vw;
 
@@ -220,24 +173,4 @@ button:disabled {
     background-color: #e3e3e3;
     color: black;
   }
-}
-
-.navButton {
-  margin-bottom: 3.2vh;
-}
-
-.navButton > a {
-  display: inline-block;
-  text-decoration: none;
-  font-weight: bold;
-  color: white;
-  padding: 1.5vh 2vw;
-  width: 71vw;
-  background-color: #7d7d7d;
-  border-radius: 25px;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.1)
-}
-
-.navButton > a:hover {
-  background-color: #aaa;
 }
